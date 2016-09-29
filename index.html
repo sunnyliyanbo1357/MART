@@ -10,16 +10,6 @@
 
     <style>[class*="foundicon-"] {font-family: GeneralFoundicons;font-style: normal;}</style>
     <script src='dist/jsoneditor.js'></script>
-
-    <script>
-    /**
-     * LZString compression library
-     * Used to create direct links to the demo.
-     * NOT REQUIRED for JSON Editor.
-     * https://github.com/pieroxy/lz-string
-     */
-    var LZString={_keyStr:"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",_f:String.fromCharCode,compressToBase64:function(e){if(e==null)return"";var t="";var n,r,i,s,o,u,a;var f=0;e=LZString.compress(e);while(f<e.length*2){if(f%2==0){n=e.charCodeAt(f/2)>>8;r=e.charCodeAt(f/2)&255;if(f/2+1<e.length)i=e.charCodeAt(f/2+1)>>8;else i=NaN}else{n=e.charCodeAt((f-1)/2)&255;if((f+1)/2<e.length){r=e.charCodeAt((f+1)/2)>>8;i=e.charCodeAt((f+1)/2)&255}else r=i=NaN}f+=3;s=n>>2;o=(n&3)<<4|r>>4;u=(r&15)<<2|i>>6;a=i&63;if(isNaN(r)){u=a=64}else if(isNaN(i)){a=64}t=t+LZString._keyStr.charAt(s)+LZString._keyStr.charAt(o)+LZString._keyStr.charAt(u)+LZString._keyStr.charAt(a)}return t},decompressFromBase64:function(e){if(e==null)return"";var t="",n=0,r,i,s,o,u,a,f,l,c=0,h=LZString._f;e=e.replace(/[^A-Za-z0-9\+\/\=]/g,"");while(c<e.length){u=LZString._keyStr.indexOf(e.charAt(c++));a=LZString._keyStr.indexOf(e.charAt(c++));f=LZString._keyStr.indexOf(e.charAt(c++));l=LZString._keyStr.indexOf(e.charAt(c++));i=u<<2|a>>4;s=(a&15)<<4|f>>2;o=(f&3)<<6|l;if(n%2==0){r=i<<8;if(f!=64){t+=h(r|s)}if(l!=64){r=o<<8}}else{t=t+h(r|i);if(f!=64){r=s<<8}if(l!=64){t+=h(r|o)}}n+=3}return LZString.decompress(t)},compressToUTF16:function(e){if(e==null)return"";var t="",n,r,i,s=0,o=LZString._f;e=LZString.compress(e);for(n=0;n<e.length;n++){r=e.charCodeAt(n);switch(s++){case 0:t+=o((r>>1)+32);i=(r&1)<<14;break;case 1:t+=o(i+(r>>2)+32);i=(r&3)<<13;break;case 2:t+=o(i+(r>>3)+32);i=(r&7)<<12;break;case 3:t+=o(i+(r>>4)+32);i=(r&15)<<11;break;case 4:t+=o(i+(r>>5)+32);i=(r&31)<<10;break;case 5:t+=o(i+(r>>6)+32);i=(r&63)<<9;break;case 6:t+=o(i+(r>>7)+32);i=(r&127)<<8;break;case 7:t+=o(i+(r>>8)+32);i=(r&255)<<7;break;case 8:t+=o(i+(r>>9)+32);i=(r&511)<<6;break;case 9:t+=o(i+(r>>10)+32);i=(r&1023)<<5;break;case 10:t+=o(i+(r>>11)+32);i=(r&2047)<<4;break;case 11:t+=o(i+(r>>12)+32);i=(r&4095)<<3;break;case 12:t+=o(i+(r>>13)+32);i=(r&8191)<<2;break;case 13:t+=o(i+(r>>14)+32);i=(r&16383)<<1;break;case 14:t+=o(i+(r>>15)+32,(r&32767)+32);s=0;break}}return t+o(i+32)},decompressFromUTF16:function(e){if(e==null)return"";var t="",n,r,i=0,s=0,o=LZString._f;while(s<e.length){r=e.charCodeAt(s)-32;switch(i++){case 0:n=r<<1;break;case 1:t+=o(n|r>>14);n=(r&16383)<<2;break;case 2:t+=o(n|r>>13);n=(r&8191)<<3;break;case 3:t+=o(n|r>>12);n=(r&4095)<<4;break;case 4:t+=o(n|r>>11);n=(r&2047)<<5;break;case 5:t+=o(n|r>>10);n=(r&1023)<<6;break;case 6:t+=o(n|r>>9);n=(r&511)<<7;break;case 7:t+=o(n|r>>8);n=(r&255)<<8;break;case 8:t+=o(n|r>>7);n=(r&127)<<9;break;case 9:t+=o(n|r>>6);n=(r&63)<<10;break;case 10:t+=o(n|r>>5);n=(r&31)<<11;break;case 11:t+=o(n|r>>4);n=(r&15)<<12;break;case 12:t+=o(n|r>>3);n=(r&7)<<13;break;case 13:t+=o(n|r>>2);n=(r&3)<<14;break;case 14:t+=o(n|r>>1);n=(r&1)<<15;break;case 15:t+=o(n|r);i=0;break}s++}return LZString.decompress(t)},compressToUint8Array:function(e){var t=LZString.compress(e);var n=new Uint8Array(t.length*2);for(var r=0,i=t.length;r<i;r++){var s=t.charCodeAt(r);n[r*2]=s>>>8;n[r*2+1]=s%256}return n},decompressFromUint8Array:function(e){if(e===null||e===undefined){return LZString.decompress(e)}else{var t=new Array(e.length/2);for(var n=0,r=t.length;n<r;n++){t[n]=e[n*2]*256+e[n*2+1]}return LZString.decompress(String.fromCharCode.apply(null,t))}},compressToEncodedURIComponent:function(e){return LZString.compressToBase64(e).replace(/=/g,"$").replace(/\//g,"-")},decompressFromEncodedURIComponent:function(e){if(e)e=e.replace(/$/g,"=").replace(/-/g,"/");return LZString.decompressFromBase64(e)},compress:function(e){if(e==null)return"";var t,n,r={},i={},s="",o="",u="",a=2,f=3,l=2,c="",h=0,p=0,d,v=LZString._f;for(d=0;d<e.length;d+=1){s=e.charAt(d);if(!Object.prototype.hasOwnProperty.call(r,s)){r[s]=f++;i[s]=true}o=u+s;if(Object.prototype.hasOwnProperty.call(r,o)){u=o}else{if(Object.prototype.hasOwnProperty.call(i,u)){if(u.charCodeAt(0)<256){for(t=0;t<l;t++){h=h<<1;if(p==15){p=0;c+=v(h);h=0}else{p++}}n=u.charCodeAt(0);for(t=0;t<8;t++){h=h<<1|n&1;if(p==15){p=0;c+=v(h);h=0}else{p++}n=n>>1}}else{n=1;for(t=0;t<l;t++){h=h<<1|n;if(p==15){p=0;c+=v(h);h=0}else{p++}n=0}n=u.charCodeAt(0);for(t=0;t<16;t++){h=h<<1|n&1;if(p==15){p=0;c+=v(h);h=0}else{p++}n=n>>1}}a--;if(a==0){a=Math.pow(2,l);l++}delete i[u]}else{n=r[u];for(t=0;t<l;t++){h=h<<1|n&1;if(p==15){p=0;c+=v(h);h=0}else{p++}n=n>>1}}a--;if(a==0){a=Math.pow(2,l);l++}r[o]=f++;u=String(s)}}if(u!==""){if(Object.prototype.hasOwnProperty.call(i,u)){if(u.charCodeAt(0)<256){for(t=0;t<l;t++){h=h<<1;if(p==15){p=0;c+=v(h);h=0}else{p++}}n=u.charCodeAt(0);for(t=0;t<8;t++){h=h<<1|n&1;if(p==15){p=0;c+=v(h);h=0}else{p++}n=n>>1}}else{n=1;for(t=0;t<l;t++){h=h<<1|n;if(p==15){p=0;c+=v(h);h=0}else{p++}n=0}n=u.charCodeAt(0);for(t=0;t<16;t++){h=h<<1|n&1;if(p==15){p=0;c+=v(h);h=0}else{p++}n=n>>1}}a--;if(a==0){a=Math.pow(2,l);l++}delete i[u]}else{n=r[u];for(t=0;t<l;t++){h=h<<1|n&1;if(p==15){p=0;c+=v(h);h=0}else{p++}n=n>>1}}a--;if(a==0){a=Math.pow(2,l);l++}}n=2;for(t=0;t<l;t++){h=h<<1|n&1;if(p==15){p=0;c+=v(h);h=0}else{p++}n=n>>1}while(true){h=h<<1;if(p==15){c+=v(h);break}else p++}return c},decompress:function(e){if(e==null)return"";if(e=="")return null;var t=[],n,r=4,i=4,s=3,o="",u="",a,f,l,c,h,p,d,v=LZString._f,m={string:e,val:e.charCodeAt(0),position:32768,index:1};for(a=0;a<3;a+=1){t[a]=a}l=0;h=Math.pow(2,2);p=1;while(p!=h){c=m.val&m.position;m.position>>=1;if(m.position==0){m.position=32768;m.val=m.string.charCodeAt(m.index++)}l|=(c>0?1:0)*p;p<<=1}switch(n=l){case 0:l=0;h=Math.pow(2,8);p=1;while(p!=h){c=m.val&m.position;m.position>>=1;if(m.position==0){m.position=32768;m.val=m.string.charCodeAt(m.index++)}l|=(c>0?1:0)*p;p<<=1}d=v(l);break;case 1:l=0;h=Math.pow(2,16);p=1;while(p!=h){c=m.val&m.position;m.position>>=1;if(m.position==0){m.position=32768;m.val=m.string.charCodeAt(m.index++)}l|=(c>0?1:0)*p;p<<=1}d=v(l);break;case 2:return""}t[3]=d;f=u=d;while(true){if(m.index>m.string.length){return""}l=0;h=Math.pow(2,s);p=1;while(p!=h){c=m.val&m.position;m.position>>=1;if(m.position==0){m.position=32768;m.val=m.string.charCodeAt(m.index++)}l|=(c>0?1:0)*p;p<<=1}switch(d=l){case 0:l=0;h=Math.pow(2,8);p=1;while(p!=h){c=m.val&m.position;m.position>>=1;if(m.position==0){m.position=32768;m.val=m.string.charCodeAt(m.index++)}l|=(c>0?1:0)*p;p<<=1}t[i++]=v(l);d=i-1;r--;break;case 1:l=0;h=Math.pow(2,16);p=1;while(p!=h){c=m.val&m.position;m.position>>=1;if(m.position==0){m.position=32768;m.val=m.string.charCodeAt(m.index++)}l|=(c>0?1:0)*p;p<<=1}t[i++]=v(l);d=i-1;r--;break;case 2:return u}if(r==0){r=Math.pow(2,s);s++}if(t[d]){o=t[d]}else{if(d===i){o=f+f.charAt(0)}else{return null}}u+=o;t[i++]=f+o.charAt(0);r--;f=o;if(r==0){r=Math.pow(2,s);s++}}}};if(typeof module!=="undefined"&&module!=null){module.exports=LZString}
-    </script>
 </head>
 <body>
 <div class='container'>
@@ -31,43 +21,14 @@
             <div id='editor'></div>
         </div>
         <div class='span4 col-md-4 columns four large-4'>
-            <div>
-                <a href='#' id='direct_link'>Direct Link</a> (preserves schema, value, and options)
-            </div>
 
             <h2>JSON Output</h2>
             <p>You can also make changes to the JSON here and set the value in the editor by clicking <button class='btn btn-primary' id='setvalue'>Update Form</button></p>
-            <textarea id='output' style='width: 100%; height: 1200px; font-family: monospace;' class='form-control'></textarea>
+            <!-- <textarea id='output' style='width: 100%; height: 1500px; font-family: monospace;' class='form-control'></textarea> -->
+            <textarea id='output' style='width: 100%; min-height: 2500px; overflow: auto; font-family: monospace;' class='form-control'></textarea>
 
-            <h2>Options</h2>
-            <div id='options_holder'>
-                <div>
-                    <label>CSS Framework</label>
-                    <select id='theme_switcher' class='form-control'>
-                        <option value='barebones'>Barebones</option>
-                        <option value='html'>HTML</option>
-                        <option value='jqueryui'>jQuery UI</option>
-                        <option value='bootstrap2'>Bootstrap 2</option>
-                        <option value='bootstrap3'>Bootstrap 3</option>
-                        <option value='foundation3'>Foundation 3</option>
-                        <option value='foundation4'>Foundation 4</option>
-                        <option value='foundation5'>Foundation 5</option>
-                        <option value='foundation6'>Foundation 6</option>
-                    </select>
-                </div>
-                <div>
-                    <label>Icon Library</label>
-                    <select id='icon_switcher' class='form-control'>
-                        <option value=''>None</option>
-                        <option value='jqueryui'>jQuery UI</option>
-                        <option value='bootstrap2'>Bootstrap 2 Glyphicons</option>
-                        <option value='bootstrap3'>Bootstrap 3 Glyphicons</option>
-                        <option value='foundation2'>Foundicons 2</option>
-                        <option value='foundation3'>Foundicons 3</option>
-                        <option value='fontawesome3'>FontAwesome 3</option>
-                        <option value='fontawesome4'>FontAwesome 4</option>
-                    </select>
-                </div>
+            <!-- <h2>Options</h2> -->
+            <div id='options_holder' style="display: none;">
                 <div>
                     <label>Object Layout</label>
                     <select id='object_layout' class='form-control'>
@@ -85,22 +46,6 @@
                     </select>
                 </div>
                 <div>
-                    <label>Boolean options</label>
-                    <select multiple size=9 id='boolean_options' style='width: 100%;' class='form-control'>
-                        <option value='required_by_default'>Object properties required by default</option>
-                        <option value='display_required_only'>Only show required properties by default</option>
-                        <option value='no_additional_properties'>No additional object properties</option>
-                        <option value='ajax'>Allow loading schemas via Ajax</option>
-                        <option value='disable_edit_json'>Disable "Edit JSON" buttons</option>
-                        <option value='disable_collapse'>Disable collapse buttons</option>
-                        <option value='disable_properties'>Disable properties buttons</option>
-                        <option value='disable_array_add'>Disable array add buttons</option>
-                        <option value='disable_array_reorder'>Disable array move buttons</option>
-                        <option value='disable_array_delete'>Disable array delete buttons</option>
-                        <option value='disable_array_delete_all_rows'>Disable array delete all rows buttons</option>
-                        <option value='disable_array_delete_last_row'>Disable array delete last row buttons</option>
-                    </select>
-                </div>
             </div>
 
             <h2>Validation</h2>
@@ -108,270 +53,350 @@
             <textarea id='validate' style='width: 100%; height: 100px; font-family: monospace;' readonly disabled class='form-control'></textarea>
         </div>
         <div class='row'>
-            <div class='span12 col-md-12 columns twelve large-12'>
+            <div class='span12 col-md-12 columns twelve large-12' style="display: none;">
                 <h2>Schema</h2>
                 <p>You can change the schema and see how the generated form looks.  After you make changes, click <button class='btn btn-primary' id='setschema'>Update Schema</button></p>
 
                 <textarea id='schema' style='width: 100%; height: 450px; font-family: monospace;' class='form-control'></textarea>
             </div>
         </div>
-<!--         <div class='row'>
-            <div class='span12 col-md-12 columns twelve large-12'>
-                <h2>Code</h2>
-      <pre><code>// Set default options
-JSONEditor.defaults.options.theme = 'bootstrap2';
 
-// Initialize the editor
-var editor = new JSONEditor(document.getElementById("editor_holder"),{
-  schema: {
-      type: "object",
-      properties: {
-          name: { "type": "string" }
-      }
-  }
-});
-
-// Set the value
-editor.setValue({
-    name: "John Smith"
-});
-
-// Get the value
-var data = editor.getValue();
-console.log(data.name); // "John Smith"
-
-// Validate
-var errors = editor.validate();
-if(errors.length) {
-  // Not valid
-}
-
-// Listen for changes
-editor.on("change",  function() {
-  // Do something...
-});</code></pre>
-            </div>
-        </div> -->
     </div>
 </div>
 <script>
 (function() {
     var schema;
-    if(window.location.href.match('[?&]schema=([^&]+)')) {
-        try {
-            schema = JSON.parse(LZString.decompressFromBase64(window.location.href.match('[?&]schema=([^&]+)')[1]));
-        }
-        catch(e) {
-            console.log('invalid starting schema');
-        }
-    }
+    // if(window.location.href.match('[?&]schema=([^&]+)')) {
+    //     try {
+    //         schema = JSON.parse(LZString.decompressFromBase64(window.location.href.match('[?&]schema=([^&]+)')[1]));
+    //     }
+    //     catch(e) {
+    //         console.log('invalid starting schema');
+    //     }
+    // }
     // Default starting schema
-    if(!schema) {
+    // if(!schema) {
         schema = {
-  "title": "YADL Full/Spot Survey",
+
+  
+  "title": "Asthma Daily Prompt",
   "type": "object",
-  "properties": {
-    "YADL":{
-      "properties":{
-
-    "full":{
-      "properties": {
-        "identifier": {
-          "type": "string",
-          "description": "Activity Identifier",
-          "minLength": 4,
-          "default": "YADL Full Identifier"
-        },
-        "prompt": {
-          "type": "string",
-          "description": "Question in general",
-          "default": "How hard is this activity for you on a difficult day?"
-        },
-        "summary": {
-          "type": "object",
-          "title": "summary",
-          "properties": {
-            "identifier": {
-              "type": "string",
-              "default": "YADL Full Summary Identifier"
-            },
-            "title": {
-              "type": "string",
-              "default": "Thanks"
-            },
-            "text": {
-              "type": "string",
-              "default": "Thank you for participating in the YADL Full Assessment"
-            }
-          }
-        },
-        "choices": {
-          "type": "array",
-          "format": "table",
-          "title": "choices",
-          "uniqueItems": true,
-          "items": {
-            "type": "object",
-            "title": "Choice",
-            "properties": {
-              "text": {
-                "type": "string",
-                "enum": [
-                  "Easy",
-                  "Moderate",
-                  "Hard"
-                ],
-                "default": "Easy"
-              },
-              "value": {
-                "type": "string"
-              },
-              "color": {
-                "type": "string",
-                "format": "color",
-                "default": "#69D2E7"
-              }
-            }
-          },
-          "default": [
-            {
-              "text": "Easy",
-              "value": "easy",
-              "color": "#69D2E7"
-            }
-          ]
-        }
-      }
-    },
-
-"spot":{
   "properties": {
     "identifier": {
       "type": "string",
       "description": "Activity Identifier",
       "minLength": 4,
-      "default": "YADL Spot Identifier"
+      "default": "AsthmaDailyPrompt"
     },
-    "prompt": {
+    "type": {
       "type": "string",
-      "description": "Question in general",
-      "default": "Which activities did you have trouble with today?"
-    },
-    "summary": {
-      "type": "object",
-      "title": "summary",
-      "properties": {
-        "identifier": {
-          "type": "string",
-          "default": "YADL Spot Summary Identifier"
-        },
-        "title": {
-          "type": "string",
-          "default": "Thanks"
-        },
-        "text": {
-          "type": "string",
-          "default": "Thank you for participating in the YADL Spot Assessment"
-        }
-      }
-    },
-    "noItemsSummary": {
-      "type": "object",
-      "title": "noItemsSummary",
-      "properties": {
-        "identifier": {
-          "type": "string",
-          "default": "YADL Spot No Activities Summary Identifier"
-        },
-        "title": {
-          "type": "string",
-          "default": "Thanks"
-        },
-        "text": {
-          "type": "string",
-          "default": "You have no activities to measure"
-        }
-      }
-    },
-    "options": {
-      "type": "object",
-      "title": "options",
-      "properties": {
-         "somethingSelectedButtonColor": {
+      "description": "Activity Type: Survey",
+      "enum": [
+        "Survey"
+      ],
+      "default": "Survey"
+    },   
+    "name": {
+      "type": "string",
+      "description": "Activity Name, can be same as identifier",
+      "default": "AsthmaDailyPrompt"
+    },   
+    "elements": {
+      "type": "array",
+      "title": "Questions",
+      
+      "items": {
+        "type": "object",
+        "title": "Question",
+      
+        "properties": {
+          "identifier": {
             "type": "string",
-            "format": "color",
-            "default": "#0080ff"
+            "description": "Question Identifier",
+            "default": "day_symptoms"
           },
-         "nothingSelectedButtonColor": {
+          "prompt": {
             "type": "string",
-            "format": "color",
-            "default": "#FCC103"
-          },
-         "itemCellSelectedColor": {
+            "description": "Question",
+            "default": "In the last 24 hours, did you have any daytime asthma symptoms (cough, wheeze, shortness of breath or chest tightness)?"
+          },   
+          "uiHint": {
             "type": "string",
-            "format": "color",
-            "default": "#7FEE7D"
+            "description": "Answer UI Type",
+            "enum": [
+              "checkbox",
+              "numberfield",
+              "MultiValueConstraints"
+            ],
+            "default": "checkbox"
           },
-        "itemCellSelectedOverlayImageTitle": {
+          "type": {
             "type": "string",
-            "default": "rsb_ic_check"
-          },
-         "itemCollectionViewBackgroundColor": {
+            "description": "Element type",
+            "enum": [
+              "SurveyQuestion"
+            ],
+            "default": "SurveyQuestion"
+          }, 
+          "guid": {
             "type": "string",
-            "format": "color",
-            "default": "#E9E9E9"
-          },
-        "itemsPerRow": {
-            "type": "integer",
-            "default": 3,
-            "minimum": 1,
-            "maximum": 8
-          },
-        "itemMinSpacing": {
-            "type": "number",
-            "default": 10.0,
-            "minimum": 1.0,
-            "maximum": 30.0
-          }
-      }
-    }
-}},
-
-    "activities":{
-          "type": "array",
-          "format": "table",
-          "title": "activities",
-          "uniqueItems": true,
-
-          "items": {
-            "type": "object",
-            "title": "activities",
-            "properties": {
-              "imageTitle": {
-                "type": "string"
+            "description": "Unique Identifier",
+            "default": "e872f8fa-c157-457b-890f-9e28eeed6efa"
+          }, 
+          "constraints":{
+            "title": "Constraints",
+            "properties":{
+              "dataType":{
+                "type": "string",
+                "enum": [
+                  "integer",
+                  "boolean"
+                ],
+                "default": "integer"
               },
-              "description": {
-                "type": "string"
+              "type": {
+                "type": "string",
+                "enum": [
+                  "IntegerConstraints",
+                  "BooleanConstraints",
+                  "MultiValueConstraints"
+                ],
+                "default":"BooleanConstraints"
               },
-              "identifier": {
-                "type": "string"
+              "allowMultiple":{
+                "type": "boolean"
+                },
+              "rules":{
+                "type": "array",
+                "title": "Skipping Rules",
+
+                "items":{
+                  "type": "object",
+                  "title": "Rule",
+
+                  "properties": {
+                    "operator": { "type": "string" },
+                    "skipTo": { "type": "string" },
+                    "type" : { "type": "string" },
+                    "value": {"type": "integer"}
+                  }
+
+                }
+              },
+              "enumeration":{
+                "title": "Enumeration",
+                "type": "array",
+                "format": "table",
+                "items":{
+                  "type": "object",
+                  "title": "Answer Option",
+                  "properties":{
+                    "type":{
+                      "type": "string",
+                      "enum": [
+                        "SurveyQuestionOption"
+                      ],
+                      "default" : "SurveyQuestionOption"
+                    },
+                    "value":{ "type": "integer" },
+                    "label": { "type": "string" }
+                  }
+                }
+
               }
+            
             }
-          },
-          "default": [
-            {
-              "imageTitle": "bathing",
-              "description": "Bathing",
-              "identifier": "Bathing"
-            }
-          ]
+          }
         }
+      },
+      "default": [
+        {
+          "identifier": "day_symptoms",
+          "prompt": "In the last 24 hours, did you have any daytime asthma symptoms (cough, wheeze, shortness of breath or chest tightness)?",
+          "uiHint": "checkbox",
+          "guid": "e872f8fa-c157-457b-890f-9e28eeed6efa",
+          "type": "SurveyQuestion",
+          "constraints": {
+            "dataType": "boolean",
+            "type": "BooleanConstraints"
+          }
+        },
+        {
+          "identifier": "night_symptoms",
+          "prompt": "In the last 24 hours, did you have any nighttime waking from asthma symptoms (cough, wheeze, shortness of breath or chest tightness)?",
+          "uiHint": "checkbox",
+          "guid": "e872f8fa-c157-457b-890f-9e28eeed6efa",
+          "type": "SurveyQuestion",
+          "constraints": {
+            "dataType": "boolean",
+            "type": "BooleanConstraints"
+          }
+        },
+        {
+          "identifier": "use_qr",
+          "prompt": "Did you use your quick relief inhaler in the last 24 hours, except before exercise?",
+          "uiHint": "checkbox",
+          "guid": "e872f8fa-c157-457b-890f-9e28eeed6efa",
+          "type": "SurveyQuestion",
+          "constraints": {
+            "dataType": "boolean",
+            "rules": [
+              {
+                "operator": "eq",
+                "skipTo": "get_worse",
+                "type": "SurveyRule",
+                "value": 0
+              }
+            ],
+            "type": "BooleanConstraints"
+          }
+        },
+        {
+          "identifier": "quick_relief_puffs",
+          "prompt": "Except for use before exercise, how many total puffs of your quick relief medicine did you take over the past 24 hours ?",
+          "uiHint": "numberfield",
+          "guid": "e27b4728-32e7-4066-985a-bee71e2580c3",
+          "type": "SurveyQuestion",
+          "constraints": {
+            "dataType": "integer",
+            "step": null,
+            "type": "IntegerConstraints",
+            "maxValue": 20,
+            "minValue": 0
+          }
+        },
+        {
+      "identifier": "get_worse",
+      "prompt": "Did any of the following cause your asthma to get worse today? (check all that apply):",
+      "uiHint": "MultiValueConstraints",
+      "guid": "c374b293-f060-4ec9-fd99-2738837967e8",
+      "type": "SurveyQuestion",
+      "constraints": {
+        "dataType": "integer",
+        "allowMultiple": true,
+        "type": "MultiValueConstraints",
+        "enumeration": [
+          {
+            "type": "SurveyQuestionOption",
+            "value": 1,
+            "label": "A cold"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 2,
+            "label": "Exercise"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 3,
+            "label": "Being more active than usual (walking, running, climbing stairs)"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 4,
+            "label": "Strong smells (perfume, chemicals, sprays, paint)"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 5,
+            "label": "Exhaust fumes"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 6,
+            "label": "House dust"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 7,
+            "label": "Dogs"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 8,
+            "label": "Cats"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 9,
+            "label": "Other furry/feathered animals"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 10,
+            "label": "Mold"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 11,
+            "label": "Pollen from trees, grass or weeds"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 12,
+            "label": "Extreme heat"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 13,
+            "label": "Extreme cold"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 14,
+            "label": "Changes in weather"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 15,
+            "label": "Around the time of my period"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 16,
+            "label": "Poor air quality"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 17,
+            "label": "Someone smoking near me"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 18,
+            "label": "Stress"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 19,
+            "label": "Feeling sad, angry, excited, tense"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 20,
+            "label": "Laughter"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 21,
+            "label": "I don't know what triggers my asthma"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 22,
+            "label": "None of these things trigger my asthma"
+          }
+        ]
       }
     }
+      ]
 
-}
-}
     }
+  }
+
+
+}//schema
+    // }//schema
     // Divs/textareas on the page
     var $schema = document.getElementById('schema');
     var $output = document.getElementById('output');
@@ -418,7 +443,7 @@ editor.on("change",  function() {
             else {
                 $validate.value = 'valid';
             }
-            updateDirectLink();
+            // updateDirectLink();
         });
     };
     // Start the schema and output textareas with initial values
@@ -442,6 +467,7 @@ editor.on("change",  function() {
     // Set the theme by loading the right stylesheets
     var setTheme = function(theme,no_reload) {
         theme = theme || '';
+        // theme = '';
         var mapping = {
             barebones: '',
             html: '',
@@ -455,11 +481,11 @@ editor.on("change",  function() {
         };
         if(typeof mapping[theme] === 'undefined') {
             theme = 'bootstrap3';
-            document.getElementById('theme_switcher').value = theme;
+            // document.getElementById('theme_switcher').value = theme;
         }
         JSONEditor.defaults.options.theme = theme;
         document.getElementById('theme_stylesheet').href = mapping[theme];
-        document.getElementById('theme_switcher').value = JSONEditor.defaults.options.theme;
+        // document.getElementById('theme_switcher').value = JSONEditor.defaults.options.theme;
         if(!no_reload) reload(true);
     };
     // Set the icontheme
@@ -474,23 +500,9 @@ editor.on("change",  function() {
         };
         JSONEditor.defaults.options.iconlib = iconlib;
         document.getElementById('icon_stylesheet').href = mapping[iconlib] || '';
-        document.getElementById('icon_switcher').value = JSONEditor.defaults.options.iconlib;
+        // document.getElementById('icon_switcher').value = JSONEditor.defaults.options.iconlib;
         if(!no_reload) reload(true);
     };
-    var refreshBooleanOptions = function(no_reload) {
-        var boolean_options = document.getElementById('boolean_options').children;
-        for(var i=0; i<boolean_options.length; i++) {
-            JSONEditor.defaults.options[boolean_options[i].value] = boolean_options[i].selected;
-        }
-        if(!no_reload) reload(true);
-    };
-    // Change listeners for options
-    document.getElementById('theme_switcher').addEventListener('change',function() {
-        setTheme(this.value);
-    });
-    document.getElementById('icon_switcher').addEventListener('change',function() {
-        setIconlib(this.value);
-    });
     document.getElementById('object_layout').addEventListener('change',function() {
        JSONEditor.defaults.options.object_layout = this.value;
         reload(true);
@@ -499,27 +511,21 @@ editor.on("change",  function() {
        JSONEditor.defaults.options.show_errors = this.value;
         reload(true);
     });
-    document.getElementById('boolean_options').addEventListener('change',function() {
-        refreshBooleanOptions();
-    });
+    // document.getElementById('boolean_options').addEventListener('change',function() {
+        // refreshBooleanOptions();
+    // });
     // Get starting value from url
     if(window.location.href.match('[?&]value=([^&]+)')) {
       window.startval = JSON.parse(LZString.decompressFromBase64(window.location.href.match('[?&]value=([^&]+)')[1]));
     }
     // Set options from direct link
+    // setTheme('bootstrap3', true);
     setTheme((window.location.href.match(/[?&]theme=([^&]+)/)||[])[1] || 'bootstrap2', true);
     setIconlib((window.location.href.match(/[?&]iconlib=([^&]*)/)||[null,'fontawesome4'])[1], true);
     document.getElementById('object_layout').value = (window.location.href.match(/[?&]object_layout=([^&]+)/)||[])[1] || 'normal';
     JSONEditor.defaults.options.object_layout = document.getElementById('object_layout').value;
     document.getElementById('show_errors').value = (window.location.href.match(/[?&]show_errors=([^&]+)/)||[])[1] || 'interaction';
     JSONEditor.defaults.options.show_errors = document.getElementById('show_errors').value;
-    var boolean_options = document.getElementById('boolean_options').children;
-    for(var i=0; i<boolean_options.length; i++) {
-        if(window.location.href.match(new RegExp('[?&]'+boolean_options[i].getAttribute('value')+'([&=]|$)'))) {
-            boolean_options[i].selected = true;
-        }
-    }
-    refreshBooleanOptions(true);
     reload();
 })();
 </script>

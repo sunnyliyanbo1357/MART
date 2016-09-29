@@ -1,0 +1,200 @@
+{
+  "title": "YADL Full/Spot Survey",
+  "type": "object",
+  "properties": {
+    "YADL": {
+      "properties": {
+        "full": {
+          "properties": {
+            "identifier": {
+              "type": "string",
+              "description": "Activity Identifier",
+              "minLength": 4,
+              "default": "YADL Full Identifier"
+            },
+            "prompt": {
+              "type": "string",
+              "description": "Question in general",
+              "default": "How hard is this activity for you on a difficult day?"
+            },
+            "summary": {
+              "type": "object",
+              "title": "summary",
+              "properties": {
+                "identifier": {
+                  "type": "string",
+                  "default": "YADL Full Summary Identifier"
+                },
+                "title": {
+                  "type": "string",
+                  "default": "Thanks"
+                },
+                "text": {
+                  "type": "string",
+                  "default": "Thank you for participating in the YADL Full Assessment"
+                }
+              }
+            },
+            "choices": {
+              "type": "array",
+              "format": "table",
+              "title": "choices",
+              "uniqueItems": true,
+              "items": {
+                "type": "object",
+                "title": "Choice",
+                "properties": {
+                  "text": {
+                    "type": "string",
+                    "enum": [
+                      "Easy",
+                      "Moderate",
+                      "Hard"
+                    ],
+                    "default": "Easy"
+                  },
+                  "value": {
+                    "type": "string"
+                  },
+                  "color": {
+                    "type": "string",
+                    "format": "color",
+                    "default": "#69D2E7"
+                  }
+                }
+              },
+              "default": [
+                {
+                  "text": "Easy",
+                  "value": "easy",
+                  "color": "#69D2E7"
+                }
+              ]
+            }
+          }
+        },
+        "spot": {
+          "properties": {
+            "identifier": {
+              "type": "string",
+              "description": "Activity Identifier",
+              "minLength": 4,
+              "default": "YADL Spot Identifier"
+            },
+            "prompt": {
+              "type": "string",
+              "description": "Question in general",
+              "default": "Which activities did you have trouble with today?"
+            },
+            "summary": {
+              "type": "object",
+              "title": "summary",
+              "properties": {
+                "identifier": {
+                  "type": "string",
+                  "default": "YADL Spot Summary Identifier"
+                },
+                "title": {
+                  "type": "string",
+                  "default": "Thanks"
+                },
+                "text": {
+                  "type": "string",
+                  "default": "Thank you for participating in the YADL Spot Assessment"
+                }
+              }
+            },
+            "noItemsSummary": {
+              "type": "object",
+              "title": "noItemsSummary",
+              "properties": {
+                "identifier": {
+                  "type": "string",
+                  "default": "YADL Spot No Activities Summary Identifier"
+                },
+                "title": {
+                  "type": "string",
+                  "default": "Thanks"
+                },
+                "text": {
+                  "type": "string",
+                  "default": "You have no activities to measure"
+                }
+              }
+            },
+            "options": {
+              "type": "object",
+              "title": "options",
+              "properties": {
+                "somethingSelectedButtonColor": {
+                  "type": "string",
+                  "format": "color",
+                  "default": "#0080ff"
+                },
+                "nothingSelectedButtonColor": {
+                  "type": "string",
+                  "format": "color",
+                  "default": "#FCC103"
+                },
+                "itemCellSelectedColor": {
+                  "type": "string",
+                  "format": "color",
+                  "default": "#7FEE7D"
+                },
+                "itemCellSelectedOverlayImageTitle": {
+                  "type": "string",
+                  "default": "rsb_ic_check"
+                },
+                "itemCollectionViewBackgroundColor": {
+                  "type": "string",
+                  "format": "color",
+                  "default": "#E9E9E9"
+                },
+                "itemsPerRow": {
+                  "type": "integer",
+                  "default": 3,
+                  "minimum": 1,
+                  "maximum": 8
+                },
+                "itemMinSpacing": {
+                  "type": "number",
+                  "default": 10,
+                  "minimum": 1,
+                  "maximum": 30
+                }
+              }
+            }
+          }
+        },
+        "activities": {
+          "type": "array",
+          "format": "table",
+          "title": "activities",
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "title": "activities",
+            "properties": {
+              "imageTitle": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "identifier": {
+                "type": "string"
+              }
+            }
+          },
+          "default": [
+            {
+              "imageTitle": "bathing",
+              "description": "Bathing",
+              "identifier": "Bathing"
+            }
+          ]
+        }
+      }
+    }
+  }
+}
