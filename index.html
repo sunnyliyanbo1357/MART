@@ -40,9 +40,9 @@
             <p>Show validation error messages if there is any.</p>
             <textarea id='validate' style='width: 100%; height: 200px; font-family: monospace;' readonly disabled class='form-control'></textarea>
 
-            <h2>scheduleString Cron</h2>
+            <h2>Cron</h2>
             <div id='selector'></div>
-            <p>Generated cron entry: <span class='cron-text' id='cron-val'></span></p>
+            <p>Copy this to scheduleString: <span class='cron-text' id='cron-val'></span></p>
 
             <!-- <textarea id='cron' style='width: 100%; min-height: 50px; font-family: monospace;' class='form-control'></textarea> -->
         </div>
@@ -106,7 +106,7 @@
           },
           "scheduleString":{ 
             "type": "string",
-            "description": "Only used when scheduleType is 'recurring'. Use Cron, for example, repeat everyday at 5:00am is: 0 5 * * *",
+            "description": "Only used when scheduleType is 'recurring'. Use the Cron tool on the right",
             "default": " "
             },
           "tasks":{
@@ -120,7 +120,7 @@
                 "taskID": {"type": "string"},
                 "taskFileName": {"type": "string"},
                 "taskClassName": {"type": "string"},
-                "taskCompletionTimeString": "8 Questions"
+                "taskCompletionTimeString": {"type": "string"}
               }
             }
 
