@@ -10,6 +10,14 @@
 
     <style>[class*="foundicon-"] {font-family: GeneralFoundicons;font-style: normal;}</style>
     <script src='dist/jsoneditor.js'></script>
+    <!-- // <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script> -->
+    <script type="text/javascript"
+        src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+    <script type="text/javascript" src="cron/jquery-cron.js"></script>
+    <link type="text/css" href="cron/jquery-cron.css" rel="stylesheet" />
+    <script type="text/javascript" src="gentleSelect/jquery-gentleSelect.js"></script>
+    <link type="text/css" href="gentleSelect/jquery-gentleSelect.css" rel="stylesheet" />
+
 </head>
 <body>
 <div class='container'>
@@ -20,6 +28,7 @@
 
             <div id='editor'></div>
         </div>
+
         <div class='span4 col-md-4 columns four large-4'>
 
             <h2>JSON Output</h2>
@@ -30,9 +39,17 @@
             <h2>Validation</h2>
             <p>Show validation error messages if there is any.</p>
             <textarea id='validate' style='width: 100%; height: 200px; font-family: monospace;' readonly disabled class='form-control'></textarea>
+
+            <h2>scheduleString Cron</h2>
+            <div id='selector'></div>
+            <p>Generated cron entry: <span class='cron-text' id='cron-val'></span></p>
+
+            <!-- <textarea id='cron' style='width: 100%; min-height: 50px; font-family: monospace;' class='form-control'></textarea> -->
         </div>
+
         <div class='row'>
-            <div class='span12 col-md-12 columns twelve large-12' style="display: none;">
+            <div class='span12 col-md-12 columns twelve large-12'>
+            <!-- <div class='span12 col-md-12 columns twelve large-12'  style="display: none;"> -->
                 <h2>Schema</h2>
                 <p>You can change the schema and see how the generated form looks.  After you make changes, click <button class='btn btn-primary' id='setschema'>Update Schema</button></p>
 
@@ -57,333 +74,176 @@
     // if(!schema) {
         schema = {
 
-  "title": "Asthma Daily Prompt",
+  "title": "Asthma Tasks and Schedules",
   "type": "object",
   "properties": {
-    "identifier": {
-      "type": "string",
-      "description": "Activity Identifier",
-      "minLength": 4,
-      "default": "AsthmaDailyPrompt"
-    },
-    "type": {
-      "type": "string",
-      "description": "Activity Type: Survey",
-      "enum": [
-        "Survey"
-      ],
-      "default": "Survey"
-    },   
-    "name": {
-      "type": "string",
-      "description": "Activity Name, can be same as identifier",
-      "default": "AsthmaDailyPrompt"
-    },   
-    "elements": {
+    "schedules": {
       "type": "array",
-      "title": "Questions",
-      
+      "title": "Tasks",
       "items": {
-        "type": "object",
-        "title": "Question",
-      
+        "type":"object",
+        "title": "Task",
+ 
         "properties": {
-          "identifier": {
+          "scheduleType": {
             "type": "string",
-            "description": "Question Identifier",
-            "default": "day_symptoms"
-          },
-          "prompt": {
-            "type": "string",
-            "description": "Question",
-            "default": "In the last 24 hours, did you have any daytime asthma symptoms (cough, wheeze, shortness of breath or chest tightness)?"
-          },   
-          "uiHint": {
-            "type": "string",
-            "description": "Answer UI Type",
+            "description": "If set 'recurring', please set 'scheduleString'",
             "enum": [
-              "checkbox",
-              "numberfield",
-              "MultiValueConstraints"
+              "once",
+              "recurring"
             ],
-            "default": "checkbox"
+            "default": "once"
           },
-          "type": {
+          "delay":{
             "type": "string",
-            "description": "Element type",
+            "description": "Only used when scheduleType is 'once'",
             "enum": [
-              "SurveyQuestion"
-            ],
-            "default": "SurveyQuestion"
-          }, 
-          "guid": {
+              "P2D",
+              "P3D",
+              "P4D"
+              ],
+              "default": " "
+          },
+          "scheduleString":{ 
             "type": "string",
-            "description": "Unique Identifier",
-            "default": "e872f8fa-c157-457b-890f-9e28eeed6efa"
-          }, 
-          "constraints":{
-            "title": "Constraints",
-            "properties":{
-              "dataType":{
-                "type": "string",
-                "enum": [
-                  "integer",
-                  "boolean"
-                ],
-                "default": "integer"
-              },
-              "type": {
-                "type": "string",
-                "enum": [
-                  "IntegerConstraints",
-                  "BooleanConstraints",
-                  "MultiValueConstraints"
-                ],
-                "default":"BooleanConstraints"
-              },
-              "allowMultiple":{
-                "type": "boolean"
-                },
-              "rules":{
-                "type": "array",
-                "title": "Skipping Rules",
-
-                "items":{
-                  "type": "object",
-                  "title": "Rule",
-
-                  "properties": {
-                    "operator": { 
-                      "type": "string",
-                      "enum": ["eq"],
-                      "default": "eq",
-                      "description": "'eq' means skip when the answer = the value you input below" },
-                    "value": {
-                      "type": "integer",
-                      "description": "Put 0 as for NO answer, and 1 for YES answer",
-                      "minimum": 0,
-                      "maximum": 1},
-                    "skipTo": { 
-                      "type": "string",
-                      "description": "Put target question identifier" },
-                    "type" : { "type": "string" }
-                    
-                  }
-
-                }
-              },
-              "enumeration":{
-                "title": "Enumeration",
-                "type": "array",
-                "format": "table",
-                "items":{
-                  "type": "object",
-                  "title": "Answer Option",
-                  "properties":{
-                    "type":{
-                      "type": "string",
-                      "enum": [
-                        "SurveyQuestionOption"
-                      ],
-                      "default" : "SurveyQuestionOption"
-                    },
-                    "value":{ "type": "integer",
-                    "minimum": 0,
-                    "maximum": 22},
-                    "label": { "type": "string" }
-                  }
-                }
-
+            "description": "Only used when scheduleType is 'recurring'. Use Cron, for example, repeat everyday at 5:00am is: 0 5 * * *",
+            "default": " "
+            },
+          "tasks":{
+            "type":"array",
+            "title":"task detail",
+            "items": {
+              "type":"object",
+              "title": " ",
+              "properties": {
+                "taskTitle": {"type": "string"},
+                "taskID": {"type": "string"},
+                "taskFileName": {"type": "string"},
+                "taskClassName": {"type": "string"},
+                "taskCompletionTimeString": "8 Questions"
               }
-            
             }
+
           }
         }
       },
       "default": [
-        {
-          "identifier": "day_symptoms",
-          "prompt": "In the last 24 hours, did you have any daytime asthma symptoms (cough, wheeze, shortness of breath or chest tightness)?",
-          "uiHint": "checkbox",
-          "guid": "e872f8fa-c157-457b-890f-9e28eeed6efa",
-          "type": "SurveyQuestion",
-          "constraints": {
-            "dataType": "boolean",
-            "type": "BooleanConstraints"
+      {
+        "scheduleType": "once",
+        "delay": "P3D",
+        "tasks": [
+          {
+            "taskTitle": "About You",
+            "taskID": "AboutYou-27829fa5-d731-4372-ba30-a5859f688297",
+            "taskFileName": "about_you",
+            "taskClassName": "APHDailyTaskViewController",
+            "taskCompletionTimeString": "8 Questions"
           }
-        },
-        {
-          "identifier": "night_symptoms",
-          "prompt": "In the last 24 hours, did you have any nighttime waking from asthma symptoms (cough, wheeze, shortness of breath or chest tightness)?",
-          "uiHint": "checkbox",
-          "guid": "e872f8fa-c157-457b-890f-9e28eeed6efa",
-          "type": "SurveyQuestion",
-          "constraints": {
-            "dataType": "boolean",
-            "type": "BooleanConstraints"
+        ]
+      },
+      {
+        "scheduleType": "recurring",
+        "scheduleString": "* * * * *",
+        "tasks": [
+          {
+            "taskTitle": "Test Survey",
+            "taskID": "1c5ee4e2-baab-47db-b515-2fbe9fdf50a6",
+            "taskFileName": "practice_survey",
+            "taskCompletionTimeString": "4 Questions"
           }
-        },
-        {
-          "identifier": "use_qr",
-          "prompt": "Did you use your quick relief inhaler in the last 24 hours, except before exercise?",
-          "uiHint": "checkbox",
-          "guid": "e872f8fa-c157-457b-890f-9e28eeed6efa",
-          "type": "SurveyQuestion",
-          "constraints": {
-            "dataType": "boolean",
-            "rules": [
-              {
-                "operator": "eq",
-                "skipTo": "get_worse",
-                "type": "SurveyRule",
-                "value": 0
-              }
-            ],
-            "type": "BooleanConstraints"
+        ]
+      },
+      {
+        "scheduleType": "recurring",
+        "scheduleString": "0 5 * * *",
+        "tasks": [
+          {
+            "taskTitle": "Daily Survey",
+            "taskID": "DailyPrompt-27829fa5-d731-4372-ba30-a5859f655297",
+            "taskFileName": "asthma_daily_prompt",
+            "taskClassName": "APHDailyTaskViewController",
+            "taskCompletionTimeString": "8 Questions"
           }
-        },
-        {
-          "identifier": "quick_relief_puffs",
-          "prompt": "Except for use before exercise, how many total puffs of your quick relief medicine did you take over the past 24 hours ?",
-          "uiHint": "numberfield",
-          "guid": "e27b4728-32e7-4066-985a-bee71e2580c3",
-          "type": "SurveyQuestion",
-          "constraints": {
-            "dataType": "integer",
-            "step": null,
-            "type": "IntegerConstraints",
-            "maxValue": 20,
-            "minValue": 0
+        ]
+      },
+      {
+        "scheduleType": "recurring",
+        "scheduleString": "0 5 * * 6",
+        "tasks": [
+          {
+            "taskTitle": "Weekly Survey",
+            "taskID": "WeeklySurvey-b573a78-8917-4582-8f1f-0552d0bfd28a",
+            "taskFileName": "asthma_weekly",
+            "taskClassName": "APHWeeklyTaskViewController",
+            "taskCompletionTimeString": "16 Questions"
           }
-        },
-        {
-      "identifier": "get_worse",
-      "prompt": "Did any of the following cause your asthma to get worse today? (check all that apply):",
-      "uiHint": "MultiValueConstraints",
-      "guid": "c374b293-f060-4ec9-fd99-2738837967e8",
-      "type": "SurveyQuestion",
-      "constraints": {
-        "dataType": "integer",
-        "allowMultiple": true,
-        "type": "MultiValueConstraints",
-        "enumeration": [
+        ]
+      },
+      {
+        "scheduleType": "once",
+        "delay": "P4D",
+        "tasks": [
           {
-            "type": "SurveyQuestionOption",
-            "value": 1,
-            "label": "A cold"
-          },
+            "taskTitle": "Medical History",
+            "taskID": "MedicalHistory-b3cd0d66-b943-11e4-a71e-12e3f512a338",
+            "taskFileName": "medical_history",
+            "taskClassName": "APCGenericSurveyTaskViewController",
+            "taskCompletionTimeString": "17 Questions"
+          }
+        ]
+      },
+      {
+        "scheduleType": "once",
+        "tasks": [
           {
-            "type": "SurveyQuestionOption",
-            "value": 2,
-            "label": "Exercise"
-          },
+            "taskTitle": "Asthma Medication",
+            "taskID": "AsthmaMedication-c2379e84-b943-11e4-a71e-12e3f512a338",
+            "taskFileName": "asthma_medication_survey",
+            "taskClassName": "APCGenericSurveyTaskViewController",
+            "taskCompletionTimeString": "19 Questions"
+          }
+        ]
+      },
+      {
+        "scheduleType": "once",
+        "delay": "P2D",
+        "tasks": [
           {
-            "type": "SurveyQuestionOption",
-            "value": 3,
-            "label": "Being more active than usual (walking, running, climbing stairs)"
-          },
+            "taskTitle": "Your Asthma",
+            "taskID": "YourAsthma-cc06cd68-b943-11e4-a71e-12e3f512a338",
+            "taskFileName": "your_asthma",
+            "taskClassName": "APCGenericSurveyTaskViewController",
+            "taskCompletionTimeString": "9 Questions"
+          }
+        ]
+      },
+      {
+        "scheduleType": "once",
+        "tasks": [
           {
-            "type": "SurveyQuestionOption",
-            "value": 4,
-            "label": "Strong smells (perfume, chemicals, sprays, paint)"
-          },
+            "taskTitle": "Asthma History",
+            "taskID": "AsthmaHistory-d6d07ba4-b943-11e4-a71e-12e3f512a338",
+            "taskFileName": "asthma_history",
+            "taskClassName": "APCGenericSurveyTaskViewController",
+            "taskCompletionTimeString": "13 Questions"
+          }
+        ]
+      },
+      {
+        "scheduleType": "once",
+        "tasks": [
           {
-            "type": "SurveyQuestionOption",
-            "value": 5,
-            "label": "Exhaust fumes"
-          },
-          {
-            "type": "SurveyQuestionOption",
-            "value": 6,
-            "label": "House dust"
-          },
-          {
-            "type": "SurveyQuestionOption",
-            "value": 7,
-            "label": "Dogs"
-          },
-          {
-            "type": "SurveyQuestionOption",
-            "value": 8,
-            "label": "Cats"
-          },
-          {
-            "type": "SurveyQuestionOption",
-            "value": 9,
-            "label": "Other furry/feathered animals"
-          },
-          {
-            "type": "SurveyQuestionOption",
-            "value": 10,
-            "label": "Mold"
-          },
-          {
-            "type": "SurveyQuestionOption",
-            "value": 11,
-            "label": "Pollen from trees, grass or weeds"
-          },
-          {
-            "type": "SurveyQuestionOption",
-            "value": 12,
-            "label": "Extreme heat"
-          },
-          {
-            "type": "SurveyQuestionOption",
-            "value": 13,
-            "label": "Extreme cold"
-          },
-          {
-            "type": "SurveyQuestionOption",
-            "value": 14,
-            "label": "Changes in weather"
-          },
-          {
-            "type": "SurveyQuestionOption",
-            "value": 15,
-            "label": "Around the time of my period"
-          },
-          {
-            "type": "SurveyQuestionOption",
-            "value": 16,
-            "label": "Poor air quality"
-          },
-          {
-            "type": "SurveyQuestionOption",
-            "value": 17,
-            "label": "Someone smoking near me"
-          },
-          {
-            "type": "SurveyQuestionOption",
-            "value": 18,
-            "label": "Stress"
-          },
-          {
-            "type": "SurveyQuestionOption",
-            "value": 19,
-            "label": "Feeling sad, angry, excited, tense"
-          },
-          {
-            "type": "SurveyQuestionOption",
-            "value": 20,
-            "label": "Laughter"
-          },
-          {
-            "type": "SurveyQuestionOption",
-            "value": 21,
-            "label": "I don't know what triggers my asthma"
-          },
-          {
-            "type": "SurveyQuestionOption",
-            "value": 22,
-            "label": "None of these things trigger my asthma"
+            "taskTitle": "Enrollment for Recontact",
+            "taskID": "APHEnrollmentForRecontactTaskViewController-1E174065-5B02-11E4-8ED6-0800200C9A66",
+            "taskClassName": "APHEnrollmentForRecontactTaskViewController",
+            "taskCompletionTimeString": "1 Question"
           }
         ]
       }
-    }
       ]
-
     }
   }
+
 
 
 }//schema
@@ -393,26 +253,28 @@
     var $output = document.getElementById('output');
     var $editor = document.getElementById('editor');
     var $validate = document.getElementById('validate');
+
     // Buttons
     var $set_schema_button = document.getElementById('setschema');
     var $set_value_button = document.getElementById('setvalue');
     var jsoneditor;
-    var updateDirectLink = function() {
-        var url = window.location.href.replace(/\?.*/,'');
-        url += '?schema='+LZString.compressToBase64(JSON.stringify(schema));
-        url += '&value='+LZString.compressToBase64(JSON.stringify(jsoneditor.getValue()));
-        for(var i in JSONEditor.defaults.options) {
-            if(!JSONEditor.defaults.options.hasOwnProperty(i)) continue;
-            if(JSONEditor.defaults.options[i]===false) continue;
-            else if(JSONEditor.defaults.options[i]===true) {
-                url += '&'+i;
-            }
-            else {
-                url += '&'+i+'='+JSONEditor.defaults.options[i];
-            }
-        }
-        document.getElementById('direct_link').href = url;
-    };
+    // var updateDirectLink = function() {
+    //     var url = window.location.href.replace(/\?.*/,'');
+    //     url += '?schema='+LZString.compressToBase64(JSON.stringify(schema));
+    //     url += '&value='+LZString.compressToBase64(JSON.stringify(jsoneditor.getValue()));
+    //     for(var i in JSONEditor.defaults.options) {
+    //         if(!JSONEditor.defaults.options.hasOwnProperty(i)) continue;
+    //         if(JSONEditor.defaults.options[i]===false) continue;
+    //         else if(JSONEditor.defaults.options[i]===true) {
+    //             url += '&'+i;
+    //         }
+    //         else {
+    //             url += '&'+i+'='+JSONEditor.defaults.options[i];
+    //         }
+    //     }
+    //     document.getElementById('direct_link').href = url;
+    // };
+
     var reload = function(keep_value) {
         var startval = (jsoneditor && keep_value)? jsoneditor.getValue() : window.startval;
         window.startval = undefined;
@@ -435,6 +297,17 @@
                 $validate.value = 'valid';
             }
             // updateDirectLink();
+            // var cron_field = $('#selector').cron();
+            // cron_field.cron("value", "12 23 * * *");
+            // var current_value = cron_field.cron("value");
+            // $cron.value = JSON.stringify(current_value,null,2);
+            $('#selector').cron({
+            initial: "42 3 * * 5",
+            onChange: function() {
+                $('#cron-val').text($(this).cron("value"));
+            },
+            useGentleSelect: true
+        });
         });
     };
     // Start the schema and output textareas with initial values
@@ -455,6 +328,7 @@
         }
         reload();
     });
+
     // Set the theme by loading the right stylesheets
     // Get starting value from url
     if(window.location.href.match('[?&]value=([^&]+)')) {
