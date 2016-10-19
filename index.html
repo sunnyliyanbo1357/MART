@@ -14,7 +14,7 @@
     <script type="text/javascript"
         src="https://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
     <script type="text/javascript" src="cron/jquery-cron.js"></script>
-    <link type="text/css" href="cron/jquery-cron.css" rel="stylesheet" />
+    <!-- <link type="text/css" href="cron/jquery-cron.css" rel="stylesheet" /> -->
     <script type="text/javascript" src="gentleSelect/jquery-gentleSelect.js"></script>
     <link type="text/css" href="gentleSelect/jquery-gentleSelect.css" rel="stylesheet" />
 
@@ -258,23 +258,14 @@
     var $set_schema_button = document.getElementById('setschema');
     var $set_value_button = document.getElementById('setvalue');
     var jsoneditor;
-    // var updateDirectLink = function() {
-    //     var url = window.location.href.replace(/\?.*/,'');
-    //     url += '?schema='+LZString.compressToBase64(JSON.stringify(schema));
-    //     url += '&value='+LZString.compressToBase64(JSON.stringify(jsoneditor.getValue()));
-    //     for(var i in JSONEditor.defaults.options) {
-    //         if(!JSONEditor.defaults.options.hasOwnProperty(i)) continue;
-    //         if(JSONEditor.defaults.options[i]===false) continue;
-    //         else if(JSONEditor.defaults.options[i]===true) {
-    //             url += '&'+i;
-    //         }
-    //         else {
-    //             url += '&'+i+'='+JSONEditor.defaults.options[i];
-    //         }
-    //     }
-    //     document.getElementById('direct_link').href = url;
-    // };
 
+    $('#selector').cron({
+      initial: "42 3 * * 5",
+      onChange: function() {
+          $('#cron-val').text($(this).cron("value"));
+      },
+      useGentleSelect: true
+    });
     var reload = function(keep_value) {
         var startval = (jsoneditor && keep_value)? jsoneditor.getValue() : window.startval;
         window.startval = undefined;
@@ -296,18 +287,6 @@
             else {
                 $validate.value = 'valid';
             }
-            // updateDirectLink();
-            // var cron_field = $('#selector').cron();
-            // cron_field.cron("value", "12 23 * * *");
-            // var current_value = cron_field.cron("value");
-            // $cron.value = JSON.stringify(current_value,null,2);
-            $('#selector').cron({
-            initial: "42 3 * * 5",
-            onChange: function() {
-                $('#cron-val').text($(this).cron("value"));
-            },
-            useGentleSelect: true
-        });
         });
     };
     // Start the schema and output textareas with initial values
