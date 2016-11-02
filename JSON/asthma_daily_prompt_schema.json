@@ -61,6 +61,8 @@
           "guid": {
             "type": "string",
             "description": "Unique Identifier",
+            "minLength": 36,
+            "maxLength":40,
             "default": "e872f8fa-c157-457b-890f-9e28eeed6efa"
           }, 
           "constraints":{

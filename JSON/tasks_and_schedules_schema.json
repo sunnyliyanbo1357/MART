@@ -23,16 +23,17 @@
             "type": "string",
             "description": "Only used when scheduleType is 'once'",
             "enum": [
+              "",
               "P2D",
               "P3D",
               "P4D"
               ],
-              "default": " "
+              "default": ""
           },
           "scheduleString":{ 
             "type": "string",
-            "description": "Only used when scheduleType is 'recurring'. Use Cron, for example, repeat everyday at 5:00am is: 0 5 * * *",
-            "default": " "
+            "description": "Only used when scheduleType is 'recurring'. Use Cron tool on the right. For example, repeat everyday at 5:00am is: 0 5 * * *",
+            "default": ""
             },
           "tasks":{
             "type":"array",
@@ -42,10 +43,14 @@
               "title": " ",
               "properties": {
                 "taskTitle": {"type": "string"},
-                "taskID": {"type": "string"},
+                "taskID": {
+                  "type": "string",
+                  "description": "Any string that is at least 36 character and no more than 80 character",
+                  "minLength": 36,
+                  "maxLength":80},
                 "taskFileName": {"type": "string"},
                 "taskClassName": {"type": "string"},
-                "taskCompletionTimeString": "8 Questions"
+                "taskCompletionTimeString":{"type": "string"}
               }
             }
 
