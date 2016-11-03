@@ -1,0 +1,160 @@
+{
+  "title": "Asthma Tasks and Schedules",
+  "type": "object",
+  "properties": {
+    "schedules": {
+      "type": "array",
+      "title": "Tasks",
+      "items": {
+        "type":"object",
+        "title": "Task",
+ 
+        "properties": {
+          "scheduleType": {
+            "type": "string",
+            "description": "If set 'recurring', please set 'scheduleString'",
+            "enum": [
+              "once",
+              "recurring"
+            ],
+            "default": "once"
+          },
+          "delay":{
+            "type": "string",
+            "description": "Only used when scheduleType is 'once'",
+            "enum": [
+              "",
+              "P2D",
+              "P3D",
+              "P4D"
+              ],
+              "default": "P3D"
+          },
+          "tasks":{
+            "type":"array",
+            "title":"task detail",
+            "items": {
+              "type":"object",
+              "title": " ",
+              "properties": {
+                "taskTitle": {
+                  "type": "string",                  
+                  "links": [
+                    {
+                      "rel": "Edit 'About You' JSON",
+                      "href": "/MART/daily.html?id=1",
+                      // Optional - set CSS classes for the link
+                      "class": "comment-link open-in-modal primary-text"
+                    }
+                  ],
+                  "default":"About You"},
+                "taskID": {
+                  "type": "string",
+                  "description": "Any string that is at least 36 character and no more than 80 character",
+                  "minLength": 36,
+                  "maxLength":80,
+                  "default": "AboutYou-27829fa5-d731-4372-ba30-a5859f688297"},
+                "taskFileName": {
+                  "type": "string",
+                  "default": "about_you"},
+                "taskClassName": {
+                  "type": "string",
+                  "default": "APHDailyTaskViewController"},
+                "taskCompletionTimeString":{
+                  "type": "string",
+                  "default": "8 Questions"}
+              }
+            }
+
+          }
+        },
+        "default": [
+        {
+          "scheduleType": "once",
+          "delay": "P3D",
+          "tasks": [
+            {
+              "taskTitle": "About You",
+              "taskID": "AboutYou-27829fa5-d731-4372-ba30-a5859f688297",
+              "taskFileName": "about_you",
+              "taskClassName": "APHDailyTaskViewController",
+              "taskCompletionTimeString": "8 Questions"
+            }
+          ]
+        }],
+
+        "properties": {
+          "scheduleType": {
+            "type": "string",
+            "description": "If set 'recurring', please set 'scheduleString'",
+            "enum": [
+              "once",
+              "recurring"
+            ],
+            "default": "once"
+          },
+          "scheduleString":{ 
+            "type": "string",
+            "description": "Only used when scheduleType is 'recurring'. Use the Cron tool on the right. For example, repeat everyday at 5:00am is: 0 5 * * *",
+            "default": ""
+            },
+          "tasks":{
+            "type":"array",
+            "title":"task detail",
+            "items": {
+              "type":"object",
+              "title": " ",
+              "properties": {
+                "taskTitle": {
+                  "type": "string",                  
+                  "links": [
+                    {
+                      "rel": "Edit 'Daily Survey' JSON",
+                      "href": "/MART/daily.html?id=1",
+                      // Optional - set CSS classes for the link
+                      "class": "comment-link open-in-modal primary-text"
+                    }
+                  ]},
+                "taskID": {
+                  "type": "string",
+                  "description": "Any string that is at least 36 character and no more than 80 character",
+                  "minLength": 36,
+                  "maxLength":80},
+                "taskFileName": {"type": "string"},
+                "taskClassName": {"type": "string"},
+                "taskCompletionTimeString":{"type": "string"}
+              }
+            }
+
+          }
+        },
+        "default": [
+        {
+          "scheduleType": "recurring",
+          "scheduleString": "0 5 * * *",
+          "tasks": [
+            {
+              "taskTitle": "Daily Survey",
+              "taskID": "DailyPrompt-27829fa5-d731-4372-ba30-a5859f655297",
+              "taskFileName": "asthma_daily_prompt",
+              "taskClassName": "APHDailyTaskViewController",
+              "taskCompletionTimeString": "8 Questions"
+            }
+          ]
+        }
+        ]
+
+
+
+
+
+
+
+
+
+      }
+    }
+  }
+}
+
+

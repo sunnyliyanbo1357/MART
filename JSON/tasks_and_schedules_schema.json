@@ -43,8 +43,15 @@
               "title": " ",
               "properties": {
                 "taskTitle": {
-                  "type": "string",
-                  "$ref": "https://sunnyliyanbo1357.github.io/MART/daily.html?id=1"},
+                  "type": "string",                  
+                  "links": [
+                    {
+                      "rel": "Edit Daily Survey",
+                      "href": "/MART/daily.html?id=1",
+                      // Optional - set CSS classes for the link
+                      "class": "comment-link open-in-modal primary-text"
+                    }
+                  ]},
                 "taskID": {
                   "type": "string",
                   "description": "Any string that is at least 36 character and no more than 80 character",
