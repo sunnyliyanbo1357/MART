@@ -22,20 +22,24 @@
 <body>
 <div class='container'>
     <div class='row'>
+        <h2>Mobile App Researcher Toolkit</h2>
+        <p>Below is the editor generated from the JSON Schema. After finish editing, you can switch between the Editor and JSON by clicking <button class='btn btn-primary' id='showjson'>Editor/JSON</button></p>
         <div class='span8 col-md-8 columns eight large-8'>
-            <h2>Mobile App Researcher Toolkit</h2>
-            <p>Below is the editor generated from the JSON Schema.</p>
-
+<!--             <h2>Mobile App Researcher Toolkit</h2>
+            <p>Below is the editor generated from the JSON Schema. After finish editing, you can generate and copy JSON files by clicking <button class='btn btn-primary' id='showjson'>Generate JSON</button></p>
+ -->
             <div id='editor'></div>
         </div>
 
-        <div class='span4 col-md-4 columns four large-4'>
+        <!-- <div id='jsonoutputdiv' class='span4 col-md-4 columns four large-4' style="display: none;">  -->
+        <div id='jsonoutputdiv' class='span8 col-md-8 columns eight large-8' style="display: none;"> 
 
             <h2>JSON Output</h2>
-            <p>You can also make changes to the JSON here and set the value in the editor by clicking <button class='btn btn-primary' id='setvalue'>Update Form</button></p>
+            <p>You can also make changes to the JSON here and set the value in the Editor by clicking <button class='btn btn-primary' id='setvalue'>Update Form</button></p>
             <textarea id='output' style='width: 100%; min-height: 2000px; overflow: auto; font-family: monospace;' class='form-control'></textarea>
+        </div>
 
-
+        <div class='span4 col-md-4 columns four large-4'>
             <h2>Validation</h2>
             <p>Show validation error messages if there is any.</p>
             <textarea id='validate' style='width: 100%; height: 200px; font-family: monospace;' readonly disabled class='form-control'></textarea>
@@ -48,8 +52,8 @@
         </div>
 
         <div class='row'>
-            <div class='span12 col-md-12 columns twelve large-12'>
-            <!-- <div class='span12 col-md-12 columns twelve large-12'  style="display: none;"> -->
+            <!-- <div class='span12 col-md-12 columns twelve large-12'> -->
+            <div class='span12 col-md-12 columns twelve large-12'  style="display: none;">
                 <h2>Schema</h2>
                 <p>You can change the schema and see how the generated form looks.  After you make changes, click <button class='btn btn-primary' id='setschema'>Update Schema</button></p>
 
@@ -73,206 +77,186 @@
     // Default starting schema
     // if(!schema) {
         schema = {
-
-
-  "title": "YADL Full/Spot Survey",
+          
+  "title": "Asthma Tasks and Schedules",
   "type": "object",
   "properties": {
-    "YADL": {
-      "properties": {
-        "full": {
-          "properties": {
-            "identifier": {
-              "type": "string",
-              "description": "Activity Identifier",
-              "minLength": 4,
-              "default": "YADL Full Identifier"
-            },
-            "prompt": {
-              "type": "string",
-              "description": "Question in general",
-              "default": "How hard is this activity for you on a difficult day?"
-            },
-            "summary": {
-              "type": "object",
-              "title": "summary",
-              "properties": {
-                "identifier": {
-                  "type": "string",
-                  "default": "YADL Full Summary Identifier"
-                },
-                "title": {
-                  "type": "string",
-                  "default": "Thanks"
-                },
-                "text": {
-                  "type": "string",
-                  "default": "Thank you for participating in the YADL Full Assessment"
-                }
-              }
-            },
-            "choices": {
-              "type": "array",
-              "format": "table",
-              "title": "choices",
-              "uniqueItems": true,
-              "items": {
-                "type": "object",
-                "title": "Choice",
-                "properties": {
-                  "text": {
-                    "type": "string",
-                    "enum": [
-                      "Easy",
-                      "Moderate",
-                      "Hard"
-                    ],
-                    "default": "Easy"
-                  },
-                  "value": {
-                    "type": "string"
-                  },
-                  "color": {
-                    "type": "string",
-                    "format": "color",
-                    "default": "#69D2E7"
-                  }
-                }
-              },
-              "default": [
-                {
-                  "text": "Easy",
-                  "value": "easy",
-                  "color": "#69D2E7"
-                }
-              ]
-            }
-          }
-        },
-        "spot": {
-          "properties": {
-            "identifier": {
-              "type": "string",
-              "description": "Activity Identifier",
-              "minLength": 4,
-              "default": "YADL Spot Identifier"
-            },
-            "prompt": {
-              "type": "string",
-              "description": "Question in general",
-              "default": "Which activities did you have trouble with today?"
-            },
-            "summary": {
-              "type": "object",
-              "title": "summary",
-              "properties": {
-                "identifier": {
-                  "type": "string",
-                  "default": "YADL Spot Summary Identifier"
-                },
-                "title": {
-                  "type": "string",
-                  "default": "Thanks"
-                },
-                "text": {
-                  "type": "string",
-                  "default": "Thank you for participating in the YADL Spot Assessment"
-                }
-              }
-            },
-            "noItemsSummary": {
-              "type": "object",
-              "title": "noItemsSummary",
-              "properties": {
-                "identifier": {
-                  "type": "string",
-                  "default": "YADL Spot No Activities Summary Identifier"
-                },
-                "title": {
-                  "type": "string",
-                  "default": "Thanks"
-                },
-                "text": {
-                  "type": "string",
-                  "default": "You have no activities to measure"
-                }
-              }
-            },
-            "options": {
-              "type": "object",
-              "title": "options",
-              "properties": {
-                "somethingSelectedButtonColor": {
-                  "type": "string",
-                  "format": "color",
-                  "default": "#0080ff"
-                },
-                "nothingSelectedButtonColor": {
-                  "type": "string",
-                  "format": "color",
-                  "default": "#FCC103"
-                },
-                "itemCellSelectedColor": {
-                  "type": "string",
-                  "format": "color",
-                  "default": "#7FEE7D"
-                },
-                "itemCellSelectedOverlayImageTitle": {
-                  "type": "string",
-                  "default": "rsb_ic_check"
-                },
-                "itemCollectionViewBackgroundColor": {
-                  "type": "string",
-                  "format": "color",
-                  "default": "#E9E9E9"
-                },
-                "itemsPerRow": {
-                  "type": "integer",
-                  "default": 3,
-                  "minimum": 1,
-                  "maximum": 8
-                },
-                "itemMinSpacing": {
-                  "type": "number",
-                  "default": 10,
-                  "minimum": 1,
-                  "maximum": 30
-                }
-              }
-            }
-          }
-        },
-        "activities": {
-          "type": "array",
-          "format": "table",
-          "title": "activities",
-          "uniqueItems": true,
-          "items": {
-            "type": "object",
-            "title": "activities",
-            "properties": {
-              "imageTitle": {
-                "type": "string"
-              },
-              "description": {
-                "type": "string"
-              },
-              "identifier": {
-                "type": "string"
-              }
-            }
+    "schedules": {
+      "type": "array",
+      "title": "Tasks",
+      "items": {
+        "type":"object",
+        "title": "Task",
+ 
+        "properties": {
+          "scheduleType": {
+            "type": "string",
+            "description": "If set 'recurring', please set 'scheduleString'",
+            "enum": [
+              "once",
+              "recurring"
+            ],
+            "default": "once"
           },
-          "default": [
-            {
-              "imageTitle": "bathing",
-              "description": "Bathing",
-              "identifier": "Bathing"
+          "delay":{
+            "type": "string",
+            "description": "Only used when scheduleType is 'once'",
+            "enum": [
+              "",
+              "P2D",
+              "P3D",
+              "P4D"
+              ],
+              "default": ""
+          },
+          "scheduleString":{ 
+            "type": "string",
+            "description": "Only used when scheduleType is 'recurring'. Use the Cron tool on the right. For example, repeat everyday at 5:00am is: 0 5 * * *",
+            "default": ""
+            },
+          "tasks":{
+            "type":"array",
+            "title":"task detail",
+            "items": {
+              "type":"object",
+              "title": " ",
+              "properties": {
+                "taskTitle": {
+                  "type": "string",
+                  "$ref": "https://sunnyliyanbo1357.github.io/MART/daily.html?id=1"},
+                "taskID": {
+                  "type": "string",
+                  "description": "Any string that is at least 36 character and no more than 80 character",
+                  "minLength": 36,
+                  "maxLength":80},
+                "taskFileName": {"type": "string"},
+                "taskClassName": {"type": "string"},
+                "taskCompletionTimeString":{"type": "string"}
+              }
             }
-          ]
+
+          }
         }
+      },
+      "default": [
+      {
+        "scheduleType": "once",
+        "delay": "P3D",
+        "tasks": [
+          {
+            "taskTitle": "About You",
+            "taskID": "AboutYou-27829fa5-d731-4372-ba30-a5859f688297",
+            "taskFileName": "about_you",
+            "taskClassName": "APHDailyTaskViewController",
+            "taskCompletionTimeString": "8 Questions"
+          }
+        ]
+      },
+      {
+        "scheduleType": "recurring",
+        "scheduleString": "* * * * *",
+        "tasks": [
+          {
+            "taskTitle": "Test Survey",
+            "taskID": "1c5ee4e2-baab-47db-b515-2fbe9fdf50a6",
+            "taskFileName": "practice_survey",
+            "taskCompletionTimeString": "4 Questions"
+          }
+        ]
+      },
+      {
+        "scheduleType": "recurring",
+        "scheduleString": "0 5 * * *",
+        "tasks": [
+          {
+            "taskTitle": "Daily Survey",
+            "taskID": "DailyPrompt-27829fa5-d731-4372-ba30-a5859f655297",
+            "taskFileName": "asthma_daily_prompt",
+            "taskClassName": "APHDailyTaskViewController",
+            "taskCompletionTimeString": "8 Questions"
+          }
+        ]
+      },
+      {
+        "scheduleType": "recurring",
+        "scheduleString": "0 5 * * 6",
+        "tasks": [
+          {
+            "taskTitle": "Weekly Survey",
+            "taskID": "WeeklySurvey-b573a78-8917-4582-8f1f-0552d0bfd28a",
+            "taskFileName": "asthma_weekly",
+            "taskClassName": "APHWeeklyTaskViewController",
+            "taskCompletionTimeString": "16 Questions"
+          }
+        ]
+      },
+      {
+        "scheduleType": "once",
+        "delay": "P4D",
+        "tasks": [
+          {
+            "taskTitle": "Medical History",
+            "taskID": "MedicalHistory-b3cd0d66-b943-11e4-a71e-12e3f512a338",
+            "taskFileName": "medical_history",
+            "taskClassName": "APCGenericSurveyTaskViewController",
+            "taskCompletionTimeString": "17 Questions"
+          }
+        ]
+      },
+      {
+        "scheduleType": "once",
+        "tasks": [
+          {
+            "taskTitle": "Asthma Medication",
+            "taskID": "AsthmaMedication-c2379e84-b943-11e4-a71e-12e3f512a338",
+            "taskFileName": "asthma_medication_survey",
+            "taskClassName": "APCGenericSurveyTaskViewController",
+            "taskCompletionTimeString": "19 Questions"
+          }
+        ]
+      },
+      {
+        "scheduleType": "once",
+        "delay": "P2D",
+        "tasks": [
+          {
+            "taskTitle": "Your Asthma",
+            "taskID": "YourAsthma-cc06cd68-b943-11e4-a71e-12e3f512a338",
+            "taskFileName": "your_asthma",
+            "taskClassName": "APCGenericSurveyTaskViewController",
+            "taskCompletionTimeString": "9 Questions"
+          }
+        ]
+      },
+      {
+        "scheduleType": "once",
+        "tasks": [
+          {
+            "taskTitle": "Asthma History",
+            "taskID": "AsthmaHistory-d6d07ba4-b943-11e4-a71e-12e3f512a338",
+            "taskFileName": "asthma_history",
+            "taskClassName": "APCGenericSurveyTaskViewController",
+            "taskCompletionTimeString": "13 Questions"
+          }
+        ]
+      },
+      {
+        "scheduleType": "once",
+        "tasks": [
+          {
+            "taskTitle": "Enrollment for Recontact",
+            "taskID": "APHEnrollmentForRecontactTaskViewController-1E174065-5B02-11E4-8ED6-0800200C9A66",
+            "taskClassName": "APHEnrollmentForRecontactTaskViewController",
+            "taskCompletionTimeString": "1 Question"
+          }
+        ]
       }
+      ]
     }
   }
+
+
+
 
 
 
@@ -284,10 +268,12 @@
     var $output = document.getElementById('output');
     var $editor = document.getElementById('editor');
     var $validate = document.getElementById('validate');
+    var $outputdiv = document.getElementById('jsonoutputdiv');
 
     // Buttons
     var $set_schema_button = document.getElementById('setschema');
     var $set_value_button = document.getElementById('setvalue');
+    var $show_JSON_button = document.getElementById('showjson');
     var jsoneditor;
 
     $('#selector').cron({
@@ -338,6 +324,14 @@
         }
         reload();
     });
+
+    $show_JSON_button.addEventListener('click',function(){
+      if($outputdiv.style.display == 'none') $outputdiv.style.display = 'block';
+      else $outputdiv.style.display = 'none';
+
+      if($editor.style.display == 'none') $editor.style.display = 'block';
+      else $editor.style.display = 'none';
+    })
 
     // Set the theme by loading the right stylesheets
     // Get starting value from url

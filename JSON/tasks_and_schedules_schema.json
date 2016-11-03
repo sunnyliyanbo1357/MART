@@ -32,7 +32,7 @@
           },
           "scheduleString":{ 
             "type": "string",
-            "description": "Only used when scheduleType is 'recurring'. Use Cron tool on the right. For example, repeat everyday at 5:00am is: 0 5 * * *",
+            "description": "Only used when scheduleType is 'recurring'. Use the Cron tool on the right. For example, repeat everyday at 5:00am is: 0 5 * * *",
             "default": ""
             },
           "tasks":{
@@ -42,7 +42,9 @@
               "type":"object",
               "title": " ",
               "properties": {
-                "taskTitle": {"type": "string"},
+                "taskTitle": {
+                  "type": "string",
+                  "$ref": "http://apps.icahn.mssm.edu/asthma/"},
                 "taskID": {
                   "type": "string",
                   "description": "Any string that is at least 36 character and no more than 80 character",
