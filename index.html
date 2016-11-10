@@ -112,6 +112,14 @@
           "scheduleString":{ 
             "type": "string",
             "description": "Only used when scheduleType is 'recurring'. Use the Cron tool on the right. For example, repeat everyday at 5:00am is: 0 5 * * *",
+          "links": [
+                    {
+                      "rel": "Edit Survey",
+                      "href": "/MART/daily.html?id=1",
+                      // Optional - set CSS classes for the link
+                      "class": "comment-link open-in-modal primary-text"
+                    }
+                  ],
             "default": ""
             },
           "tasks":{
@@ -122,15 +130,7 @@
               "title": " ",
               "properties": {
                 "taskTitle": {
-                  "type": "string",                  
-                  "links": [
-                    {
-                      "rel": "Edit Daily Survey",
-                      "href": "/MART/daily.html?id=1",
-                      // Optional - set CSS classes for the link
-                      "class": "comment-link open-in-modal primary-text"
-                    }
-                  ]},
+                  "type": "string"},
                 "taskID": {
                   "type": "string",
                   "description": "Any string that is at least 36 character and no more than 80 character",
@@ -261,6 +261,7 @@
       ]
     }
   }
+
 
 
 
