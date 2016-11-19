@@ -7,32 +7,40 @@
       "identifier": "day_symptoms",
       "prompt": "In the last 24 hours, did you have any daytime asthma symptoms (cough, wheeze, shortness of breath or chest tightness)?",
       "uiHint": "checkbox",
-      "guid": "e872f8fa-c157-457b-890f-9e28eeed6efa",
       "type": "SurveyQuestion",
+      "guid": "e872f8fa-c157-457b-890f-9e28eeed6efa",
       "constraints": {
         "dataType": "boolean",
-        "type": "BooleanConstraints"
+        "type": "BooleanConstraints",
+        "allowMultiple": false,
+        "rules": [],
+        "enumeration": []
       }
     },
     {
       "identifier": "night_symptoms",
       "prompt": "In the last 24 hours, did you have any nighttime waking from asthma symptoms (cough, wheeze, shortness of breath or chest tightness)?",
       "uiHint": "checkbox",
-      "guid": "e872f8fa-c157-457b-890f-9e28eeed6efa",
       "type": "SurveyQuestion",
+      "guid": "e872f8fa-c157-457b-890f-9e28eeed6efa",
       "constraints": {
         "dataType": "boolean",
-        "type": "BooleanConstraints"
+        "type": "BooleanConstraints",
+        "allowMultiple": false,
+        "rules": [],
+        "enumeration": []
       }
     },
     {
       "identifier": "use_qr",
       "prompt": "Did you use your quick relief inhaler in the last 24 hours, except before exercise?",
       "uiHint": "checkbox",
-      "guid": "e872f8fa-c157-457b-890f-9e28eeed6efa",
       "type": "SurveyQuestion",
+      "guid": "e872f8fa-c157-457b-890f-9e28eeed6efa",
       "constraints": {
         "dataType": "boolean",
+        "type": "BooleanConstraints",
+        "allowMultiple": false,
         "rules": [
           {
             "operator": "eq",
@@ -41,19 +49,22 @@
             "value": 0
           }
         ],
-        "type": "BooleanConstraints"
+        "enumeration": []
       }
     },
     {
       "identifier": "quick_relief_puffs",
       "prompt": "Except for use before exercise, how many total puffs of your quick relief medicine did you take over the past 24 hours ?",
       "uiHint": "numberfield",
-      "guid": "e27b4728-32e7-4066-985a-bee71e2580c3",
       "type": "SurveyQuestion",
+      "guid": "e27b4728-32e7-4066-985a-bee71e2580c3",
       "constraints": {
         "dataType": "integer",
-        "step": null,
         "type": "IntegerConstraints",
+        "allowMultiple": false,
+        "rules": [],
+        "enumeration": [],
+        "step": null,
         "maxValue": 20,
         "minValue": 0
       }
@@ -62,12 +73,13 @@
       "identifier": "get_worse",
       "prompt": "Did any of the following cause your asthma to get worse today? (check all that apply):",
       "uiHint": "MultiValueConstraints",
-      "guid": "c374b293-f060-4ec9-fd99-2738837967e8",
       "type": "SurveyQuestion",
+      "guid": "c374b293-f060-4ec9-fd99-2738837967e8",
       "constraints": {
         "dataType": "integer",
-        "allowMultiple": true,
         "type": "MultiValueConstraints",
+        "allowMultiple": true,
+        "rules": [],
         "enumeration": [
           {
             "type": "SurveyQuestionOption",
@@ -178,53 +190,6 @@
             "type": "SurveyQuestionOption",
             "value": 22,
             "label": "None of these things trigger my asthma"
-          }
-        ]
-      }
-    },
-    {
-      "identifier": "peakflow",
-      "prompt": "Enter your peak flow today? (L/min)",
-      "uiHint": "numberfield",
-      "guid": "21987ad2-4846-48a4-aa80-27c3371186c0",
-      "type": "SurveyQuestion",
-      "constraints": {
-        "dataType": "integer",
-        "type": "IntegerConstraints",
-        "step": null,
-        "maxValue": 900,
-        "minValue": 60
-      }
-    },
-    {
-      "identifier": "medicine",
-      "prompt": "Did you take your asthma control medicine in the last 24 hours?",
-      "uiHint": "MultiValueConstraints",
-      "guid": "c374b293-c060-47c9-bd99-2738837967a8",
-      "type": "SurveyQuestion",
-      "constraints": {
-        "dataType": "integer",
-        "type": "MultiValueConstraints",
-        "enumeration": [
-          {
-            "type": "SurveyQuestionOption",
-            "value": 1,
-            "label": "Yes, all of my prescribed doses"
-          },
-          {
-            "type": "SurveyQuestionOption",
-            "value": 2,
-            "label": "Yes, some but not all of my prescribed doses"
-          },
-          {
-            "type": "SurveyQuestionOption",
-            "value": 3,
-            "label": "No, I did not take them"
-          },
-          {
-            "type": "SurveyQuestionOption",
-            "value": 4,
-            "label": "I'm not sure"
           }
         ]
       }
