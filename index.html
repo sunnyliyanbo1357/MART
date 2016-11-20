@@ -347,11 +347,13 @@
     $upload_JSON_button.addEventListener('click',function(){
 
       var uploadURL ="https://api.github.com/repos/sunnyliyanbo1357/MART/contents/JSON/test.json";
-      console.log($accessToken.value);
+
       $.ajax({
         type: "PUT",
         url: uploadURL,
-        headers: {"Authorization": "token " + $accessToken.value},
+        beforeSend: function(xhr) {
+          xhr.setRequestHeader('Authorization', "token " + $accessToken.value);
+        },
         contentType: "application/json",
         dataType: "json",
         data: JSON.stringify({
