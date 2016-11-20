@@ -23,7 +23,8 @@
 <div class='container'>
     <div class='row'>
         <h2>Mobile App Researcher Toolkit</h2>
-        <p>Below is the editor generated from the JSON Schema. After finish editing, you can switch between the Editor and JSON by clicking <button class='btn btn-primary' id='showjson'>Editor/JSON</button></p>
+        <p>Below is the editor generated from the JSON Schema. After finish editing, you can switch between the Editor and JSON by clicking <button class='btn btn-primary' id='showjson'>Editor/JSON</button> </p>
+        <p>If you have the online JSON file access token, paste it here <input type="text" pattern=".{4,}" name="accessToken" id='accessToken' style="width: 30%"> and then click <button class='btn btn-primary' id='uploadjson'>Upload</button> to upload the JSON file </p>
         <div class='span8 col-md-8 columns eight large-8'>
 <!--             <h2>Mobile App Researcher Toolkit</h2>
             <p>Below is the editor generated from the JSON Schema. After finish editing, you can generate and copy JSON files by clicking <button class='btn btn-primary' id='showjson'>Generate JSON</button></p>
@@ -268,11 +269,6 @@
 
 
 
-
-
-
-
-
 }//schema
     // }//schema
     // Divs/textareas on the page
@@ -281,11 +277,13 @@
     var $editor = document.getElementById('editor');
     var $validate = document.getElementById('validate');
     var $outputdiv = document.getElementById('jsonoutputdiv');
+    var $accessToken = document.getElementById('accessToken');
 
     // Buttons
     var $set_schema_button = document.getElementById('setschema');
     var $set_value_button = document.getElementById('setvalue');
     var $show_JSON_button = document.getElementById('showjson');
+    var $upload_JSON_button = document.getElementById('uploadjson');
     var jsoneditor;
 
     $('#selector').cron({
@@ -336,7 +334,7 @@
         }
         reload();
     });
-
+    // Click to change between Editing view and Preview view
     $show_JSON_button.addEventListener('click',function(){
       if($outputdiv.style.display == 'none') $outputdiv.style.display = 'block';
       else $outputdiv.style.display = 'none';
@@ -344,35 +342,38 @@
       if($editor.style.display == 'none') $editor.style.display = 'block';
       else $editor.style.display = 'none';
     })
-    var accessToken = "4f9cf31425b31c436fe2801faab333c27cf35932";
-    var uploadURL ="https://api.github.com/repos/sunnyliyanbo1357/MART/contents/JSON/test.json"; //+ accessToken;
 
-    console.log(uploadURL);
+    // Upload the JSON file in uploadURL
+    $upload_JSON_button.addEventListener('click',function(){
 
-    $.ajax({
-      type: "PUT",
-      url: uploadURL,
-      headers: {"Authorization": "token 4f9cf31425b31c436fe2801faab333c27cf35932"},
-      contentType: "application/json",
-      dataType: "json",
-      data: JSON.stringify({
-        "message": "my commit message",
-        "committer": {"name": "Yanbo Li","email": "sunnyliyanbo@gmail.com"},
-        "content": "bXkgdXBkYXRlZCBmaWxlIGNvbnRlbnRz",
-        "sha": "fb617c9e42866ca24d0ff8e0c2725048f6f9530c"}),
-      
-      success: function(response) {
-        alert(response);
-        console.log( response );        
-      },
-      error: function() {
-        alert('ajax error');
-        console.log( response );
-      }
+      var uploadURL ="https://api.github.com/repos/sunnyliyanbo1357/MART/contents/JSON/test.json";
+
+      $.ajax({
+        type: "PUT",
+        url: uploadURL,
+        headers: {"Authorization": "token " + $accessToken.value},
+        contentType: "application/json",
+        dataType: "json",
+        data: JSON.stringify({
+          "message": "my commit message",
+          "committer": {"name": "Yanbo Li","email": "sunnyliyanbo@gmail.com"},
+          "content": "bXkgdXBkYXRlZCBmaWxlIGNvbnRlbnRz",
+          "sha": "fb617c9e42866ca24d0ff8e0c2725048f6f9530c"}),
+        
+        success: function(response) {
+          alert(response);
+          console.log( response );        
+        },
+        error: function(response) {
+          alert('Invalid Token');
+          console.log( response );
+        }
+      })
+
+
     })
-      .done(function( data ) {
-        console.log( data );
-      });
+
+
 
     // Set the theme by loading the right stylesheets
     // Get starting value from url
