@@ -344,6 +344,35 @@
       if($editor.style.display == 'none') $editor.style.display = 'block';
       else $editor.style.display = 'none';
     })
+    var accessToken = "4f9cf31425b31c436fe2801faab333c27cf35932";
+    var uploadURL ="https://api.github.com/repos/sunnyliyanbo1357/MART/contents/JSON/test.json"; //+ accessToken;
+
+    console.log(uploadURL);
+
+    $.ajax({
+      type: "PUT",
+      url: uploadURL,
+      headers: {"Authorization": "token 4f9cf31425b31c436fe2801faab333c27cf35932"},
+      contentType: "application/json",
+      dataType: "json",
+      data: JSON.stringify({
+        "message": "my commit message",
+        "committer": {"name": "Yanbo Li","email": "sunnyliyanbo@gmail.com"},
+        "content": "bXkgdXBkYXRlZCBmaWxlIGNvbnRlbnRz",
+        "sha": "fb617c9e42866ca24d0ff8e0c2725048f6f9530c"}),
+      
+      success: function(response) {
+        alert(response);
+        console.log( response );        
+      },
+      error: function() {
+        alert('ajax error');
+        console.log( response );
+      }
+    })
+      .done(function( data ) {
+        console.log( data );
+      });
 
     // Set the theme by loading the right stylesheets
     // Get starting value from url
