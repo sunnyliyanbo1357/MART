@@ -297,7 +297,7 @@
 
     // Update Sha each time upload the online JSON file
     // var sha = 'fb617c9e42866ca24d0ff8e0c2725048f6f9530c';
-    var sha = '';
+
 
     var reload = function(keep_value) {
         var startval = (jsoneditor && keep_value)? jsoneditor.getValue() : window.startval;
@@ -361,8 +361,34 @@
         },
         success: function(response) {
           console.log( response );
-          console.log( response.sha );
-          sha = response.sha;
+          // var sha = response.sha;
+
+          $.ajax({
+            type: "PUT",
+            url: uploadURL,
+            beforeSend: function(xhr) {
+              xhr.setRequestHeader('Authorization', "token " + $accessToken.value);
+            },
+            contentType: "application/json",
+            dataType: "json",
+            data: JSON.stringify({
+              "message": "my commit message",
+              "committer": {"name": "Yanbo Li","email": "sunnyliyanbo@gmail.com"},
+              "content": "bXkgdXBkYXRlZCBmaWxlIGNvbnRlbnRz",
+              "sha": response.sha}),
+            
+            success: function(response) {
+              alert('Upload Success. Now you can check the RSuite app for new survey.');
+              updateSha();
+              console.log( response );
+              // console.log( response.content.sha );
+              // sha = response.content.sha;
+            },
+            error: function(response) {
+              alert('Invalid Token');
+              console.log( response );
+            }
+          })
         },
         error: function(response) {
           alert('Invalid Token');
@@ -370,32 +396,6 @@
         }
       })
 
-      $.ajax({
-        type: "PUT",
-        url: uploadURL,
-        beforeSend: function(xhr) {
-          xhr.setRequestHeader('Authorization', "token " + $accessToken.value);
-        },
-        contentType: "application/json",
-        dataType: "json",
-        data: JSON.stringify({
-          "message": "my commit message",
-          "committer": {"name": "Yanbo Li","email": "sunnyliyanbo@gmail.com"},
-          "content": "bXkgdXBkYXRlZCBmaWxlIGNvbnRlbnRz",
-          "sha": sha}),
-        
-        success: function(response) {
-          alert('Upload Success. Now you can check the RSuite app for new survey.');
-          updateSha();
-          console.log( response );
-          // console.log( response.content.sha );
-          sha = response.content.sha;
-        },
-        error: function(response) {
-          alert('Invalid Token');
-          console.log( response );
-        }
-      })
 
 
     })
