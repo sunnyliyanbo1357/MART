@@ -351,7 +351,8 @@
     // Upload the JSON file in uploadURL
     $upload_JSON_button.addEventListener('click',function(){
 
-      var uploadURL ="https://api.github.com/repos/sunnyliyanbo1357/MART/contents/JSON/test.json";
+      var uploadURL ="https://api.github.com/repos/sunnyliyanbo1357/MART/contents/JSON/test.json";\
+      var content = $.base64.encode("this is a test");
       //Get original Sha
       $.ajax({
         url: uploadURL,
@@ -373,7 +374,7 @@
               "message": "my commit message",
               "committer": {"name": "Yanbo Li","email": "sunnyliyanbo@gmail.com"},
               // "content": "bXkgdXBkYXRlZCBmaWxlIGNvbnRlbnRz",
-              "content" : $.base64.encode("this is a test"),
+              "content" : content,
               "sha": response.sha}),
             
             success: function(response) {
