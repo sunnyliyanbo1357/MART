@@ -360,7 +360,6 @@
           xhr.setRequestHeader('Authorization', "token " + $accessToken.value);
         },
         success: function(response) {
-          updateSha();
           console.log( response );
           console.log( response.sha );
           sha = response.sha;
