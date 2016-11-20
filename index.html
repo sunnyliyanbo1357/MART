@@ -295,10 +295,7 @@
       useGentleSelect: true
     });
 
-    // Update Sha each time upload the online JSON file
-    // var sha = 'fb617c9e42866ca24d0ff8e0c2725048f6f9530c';
-
-
+    // Reload
     var reload = function(keep_value) {
         var startval = (jsoneditor && keep_value)? jsoneditor.getValue() : window.startval;
         window.startval = undefined;
@@ -322,24 +319,26 @@
             }
         });
     };
-    // Start the schema and output textareas with initial values
-    $schema.value = JSON.stringify(schema,null,2);
-    $output.value = '';
-    // When the 'update form' button is clicked, set the editor's value
-    $set_value_button.addEventListener('click',function() {
-        jsoneditor.setValue(JSON.parse($output.value));
-    });
-    // Update the schema when the button is clicked
-    $set_schema_button.addEventListener('click',function() {
-        try {
-            schema = JSON.parse($schema.value);
-        }
-        catch(e) {
-            alert('Invalid Schema: '+e.message);
-            return;
-        }
-        reload();
-    });
+
+    // // Start the schema and output textareas with initial values
+    // $schema.value = JSON.stringify(schema,null,2);
+    // $output.value = '';
+    // // When the 'update form' button is clicked, set the editor's value
+    // $set_value_button.addEventListener('click',function() {
+    //     jsoneditor.setValue(JSON.parse($output.value));
+    // });
+    // // Update the schema when the button is clicked
+    // $set_schema_button.addEventListener('click',function() {
+    //     try {
+    //         schema = JSON.parse($schema.value);
+    //     }
+    //     catch(e) {
+    //         alert('Invalid Schema: '+e.message);
+    //         return;
+    //     }
+    //     reload();
+    // });
+
     // Click to change between Editing view and Preview view
     $show_JSON_button.addEventListener('click',function(){
       if($outputdiv.style.display == 'none') $outputdiv.style.display = 'block';
@@ -353,7 +352,7 @@
     $upload_JSON_button.addEventListener('click',function(){
 
       var uploadURL ="https://api.github.com/repos/sunnyliyanbo1357/MART/contents/JSON/test.json";
-
+      //Get original Sha
       $.ajax({
         url: uploadURL,
         beforeSend: function(xhr) {
@@ -361,8 +360,7 @@
         },
         success: function(response) {
           console.log( response );
-          // var sha = response.sha;
-
+          //PUT new content 
           $.ajax({
             type: "PUT",
             url: uploadURL,
@@ -374,15 +372,13 @@
             data: JSON.stringify({
               "message": "my commit message",
               "committer": {"name": "Yanbo Li","email": "sunnyliyanbo@gmail.com"},
-              "content": "bXkgdXBkYXRlZCBmaWxlIGNvbnRlbnRz",
+              // "content": "bXkgdXBkYXRlZCBmaWxlIGNvbnRlbnRz",
+              "content" : $.base64.encode("this is a test");
               "sha": response.sha}),
             
             success: function(response) {
               alert('Upload Success. Now you can check the RSuite app for new survey.');
-              updateSha();
               console.log( response );
-              // console.log( response.content.sha );
-              // sha = response.content.sha;
             },
             error: function(response) {
               alert('Invalid Token');
@@ -395,12 +391,7 @@
           console.log( response );
         }
       })
-
-
-
     })
-
-
 
     // Set the theme by loading the right stylesheets
     // Get starting value from url
