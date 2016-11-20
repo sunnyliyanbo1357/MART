@@ -352,7 +352,11 @@
     $upload_JSON_button.addEventListener('click',function(){
 
       var uploadURL ="https://api.github.com/repos/sunnyliyanbo1357/MART/contents/JSON/test.json";
-      var content = $.base64.encode("this is a test");
+      // var content = $.base64.encode("this is a test");
+      var content = btoa("this is a test");
+      console.log(content);
+
+
       //Get original Sha
       $.ajax({
         url: uploadURL,
