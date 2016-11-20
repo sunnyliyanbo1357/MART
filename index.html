@@ -10,11 +10,9 @@
 
     <style>[class*="foundicon-"] {font-family: GeneralFoundicons;font-style: normal;}</style>
     <script src='dist/jsoneditor.js'></script>
-    <!-- // <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script> -->
     <script type="text/javascript"
         src="https://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
     <script type="text/javascript" src="cron/jquery-cron.js"></script>
-    <!-- <link type="text/css" href="cron/jquery-cron.css" rel="stylesheet" /> -->
     <script type="text/javascript" src="gentleSelect/jquery-gentleSelect.js"></script>
     <link type="text/css" href="gentleSelect/jquery-gentleSelect.css" rel="stylesheet" />
 
@@ -23,8 +21,8 @@
 <div class='container'>
     <div class='row'>
         <h2>Mobile App Researcher Toolkit</h2>
-        <p>Switch between the Editor and JSON by clicking <button class='btn btn-primary' id='showjson'>Editor/JSON</button> </p>
-        <p>If you have the online JSON file <b>Access Token</b>, paste it here <input type="text" pattern=".{4,}" name="accessToken" id='accessToken' style="width: 25%"> and then click <button class='btn btn-primary' id='uploadjson'>Upload</button> </p>
+        <p> <button class='btn btn-primary' id='showjson'>Edit / Preview</button> Switch between the Editor and JSON file preview </p>
+        <p> <button class='btn btn-primary' id='uploadjson'>Upload JSON</button> If you have the online JSON file <b>Access Token</b>, put it here <input type="text" pattern=".{4,}" name="accessToken" id='accessToken' style="width: 28%"> and then click  Upload JSON </p>
         <div class='span8 col-md-8 columns eight large-8'>
 <!--             <h2>Mobile App Researcher Toolkit</h2>
             <p>Below is the editor generated from the JSON Schema. After finish editing, you can generate and copy JSON files by clicking <button class='btn btn-primary' id='showjson'>Generate JSON</button></p>
