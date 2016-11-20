@@ -286,6 +286,7 @@
     var $upload_JSON_button = document.getElementById('uploadjson');
     var jsoneditor;
 
+    // Cron Tool
     $('#selector').cron({
       initial: "42 3 * * 5",
       onChange: function() {
@@ -293,6 +294,12 @@
       },
       useGentleSelect: true
     });
+
+    // Update Sha each time upload the online JSON file
+    var sha = 'fb617c9e42866ca24d0ff8e0c2725048f6f9530c';
+    var updateSha = function(){
+
+    }
     var reload = function(keep_value) {
         var startval = (jsoneditor && keep_value)? jsoneditor.getValue() : window.startval;
         window.startval = undefined;
@@ -363,8 +370,11 @@
           "sha": "fb617c9e42866ca24d0ff8e0c2725048f6f9530c"}),
         
         success: function(response) {
-          alert(response);
-          console.log( response );        
+          alert('Upload Success. Now you can check the RSuite app for new survey.');
+          updateSha();
+          console.log( response );
+          console.log( JSON.parse(response));
+          console.log( JSON.parse(response).content.sha );        
         },
         error: function(response) {
           alert('Invalid Token');
