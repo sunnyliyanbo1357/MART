@@ -373,8 +373,7 @@
           alert('Upload Success. Now you can check the RSuite app for new survey.');
           updateSha();
           console.log( response );
-          console.log( JSON.parse(response));
-          console.log( JSON.parse(response).content.sha );        
+          console.log( response.content.sha );        
         },
         error: function(response) {
           alert('Invalid Token');
