@@ -296,10 +296,9 @@
     });
 
     // Update Sha each time upload the online JSON file
-    var sha = 'fb617c9e42866ca24d0ff8e0c2725048f6f9530c';
-    var updateSha = function(){
+    // var sha = 'fb617c9e42866ca24d0ff8e0c2725048f6f9530c';
+    var sha = '';
 
-    }
     var reload = function(keep_value) {
         var startval = (jsoneditor && keep_value)? jsoneditor.getValue() : window.startval;
         window.startval = undefined;
@@ -356,6 +355,23 @@
       var uploadURL ="https://api.github.com/repos/sunnyliyanbo1357/MART/contents/JSON/test.json";
 
       $.ajax({
+        url: uploadURL,
+        beforeSend: function(xhr) {
+          xhr.setRequestHeader('Authorization', "token " + $accessToken.value);
+        },
+        success: function(response) {
+          updateSha();
+          console.log( response );
+          console.log( response.sha );
+          sha = response.sha;
+        },
+        error: function(response) {
+          alert('Invalid Token');
+          console.log( response );
+        }
+      })
+
+      $.ajax({
         type: "PUT",
         url: uploadURL,
         beforeSend: function(xhr) {
@@ -367,13 +383,14 @@
           "message": "my commit message",
           "committer": {"name": "Yanbo Li","email": "sunnyliyanbo@gmail.com"},
           "content": "bXkgdXBkYXRlZCBmaWxlIGNvbnRlbnRz",
-          "sha": "fb617c9e42866ca24d0ff8e0c2725048f6f9530c"}),
+          "sha": sha}),
         
         success: function(response) {
           alert('Upload Success. Now you can check the RSuite app for new survey.');
           updateSha();
           console.log( response );
-          console.log( response.content.sha );        
+          // console.log( response.content.sha );
+          sha = response.content.sha;
         },
         error: function(response) {
           alert('Invalid Token');
