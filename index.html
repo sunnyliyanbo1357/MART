@@ -353,8 +353,8 @@
 
       var uploadURL ="https://api.github.com/repos/sunnyliyanbo1357/MART/contents/JSON/test.json";
       // var content = $.base64.encode("this is a test");
-      var content = btoa("this is a test");
-      console.log(content);
+      var content = btoa($output.value);
+      console.log(atob(content));
 
 
       //Get original Sha
