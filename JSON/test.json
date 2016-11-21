@@ -1,34 +1,6 @@
 {
   "schedules": [
     {
-      "scheduleType": "once",
-      "delay": "P3D",
-      "scheduleString": "",
-      "tasks": [
-        {
-          "taskTitle": "About You",
-          "taskID": "AboutYou-27829fa5-d731-4372-ba30-a5859f688297",
-          "taskFileName": "about_you",
-          "taskClassName": "APHDailyTaskViewController",
-          "taskCompletionTimeString": "8 Questions"
-        }
-      ]
-    },
-    {
-      "scheduleType": "recurring",
-      "delay": "",
-      "scheduleString": "* * * * *",
-      "tasks": [
-        {
-          "taskTitle": "Test Survey",
-          "taskID": "1c5ee4e2-baab-47db-b515-2fbe9fdf50a6",
-          "taskFileName": "practice_survey",
-          "taskClassName": "",
-          "taskCompletionTimeString": "4 Questions"
-        }
-      ]
-    },
-    {
       "scheduleType": "recurring",
       "delay": "",
       "scheduleString": "0 5 * * *",
