@@ -1,6 +1,20 @@
 {
   "schedules": [
     {
+      "scheduleType": "once",
+      "delay": "P3D",
+      "scheduleString": "",
+      "tasks": [
+        {
+          "taskTitle": "About You",
+          "taskID": "AboutYou-27829fa5-d731-4372-ba30-a5859f688297",
+          "taskFileName": "about_you",
+          "taskClassName": "APHDailyTaskViewController",
+          "taskCompletionTimeString": "8 Questions"
+        }
+      ]
+    },
+    {
       "scheduleType": "recurring",
       "delay": "",
       "scheduleString": "* * * * *",
@@ -44,6 +58,20 @@
     },
     {
       "scheduleType": "once",
+      "delay": "P4D",
+      "scheduleString": "",
+      "tasks": [
+        {
+          "taskTitle": "Medical History",
+          "taskID": "MedicalHistory-b3cd0d66-b943-11e4-a71e-12e3f512a338",
+          "taskFileName": "medical_history",
+          "taskClassName": "APCGenericSurveyTaskViewController",
+          "taskCompletionTimeString": "17 Questions"
+        }
+      ]
+    },
+    {
+      "scheduleType": "once",
       "delay": "",
       "scheduleString": "",
       "tasks": [
@@ -53,6 +81,20 @@
           "taskFileName": "asthma_medication_survey",
           "taskClassName": "APCGenericSurveyTaskViewController",
           "taskCompletionTimeString": "19 Questions"
+        }
+      ]
+    },
+    {
+      "scheduleType": "once",
+      "delay": "P2D",
+      "scheduleString": "",
+      "tasks": [
+        {
+          "taskTitle": "Your Asthma",
+          "taskID": "YourAsthma-cc06cd68-b943-11e4-a71e-12e3f512a338",
+          "taskFileName": "your_asthma",
+          "taskClassName": "APCGenericSurveyTaskViewController",
+          "taskCompletionTimeString": "9 Questions"
         }
       ]
     },
