@@ -2,6 +2,62 @@
   "schedules": [
     {
       "scheduleType": "once",
+      "delay": "P3D",
+      "scheduleString": "",
+      "tasks": [
+        {
+          "taskTitle": "About You",
+          "taskID": "AboutYou-27829fa5-d731-4372-ba30-a5859f688297",
+          "taskFileName": "about_you",
+          "taskClassName": "APHDailyTaskViewController",
+          "taskCompletionTimeString": "8 Questions"
+        }
+      ]
+    },
+    {
+      "scheduleType": "recurring",
+      "delay": "",
+      "scheduleString": "* * * * *",
+      "tasks": [
+        {
+          "taskTitle": "Test Survey",
+          "taskID": "1c5ee4e2-baab-47db-b515-2fbe9fdf50a6",
+          "taskFileName": "practice_survey",
+          "taskClassName": "",
+          "taskCompletionTimeString": "4 Questions"
+        }
+      ]
+    },
+    {
+      "scheduleType": "recurring",
+      "delay": "",
+      "scheduleString": "0 5 * * *",
+      "tasks": [
+        {
+          "taskTitle": "Daily Survey",
+          "taskID": "DailyPrompt-27829fa5-d731-4372-ba30-a5859f655297",
+          "taskFileName": "asthma_daily_prompt",
+          "taskClassName": "APHDailyTaskViewController",
+          "taskCompletionTimeString": "8 Questions"
+        }
+      ]
+    },
+    {
+      "scheduleType": "recurring",
+      "delay": "",
+      "scheduleString": "0 5 * * 6",
+      "tasks": [
+        {
+          "taskTitle": "Weekly Survey",
+          "taskID": "WeeklySurvey-b573a78-8917-4582-8f1f-0552d0bfd28a",
+          "taskFileName": "asthma_weekly",
+          "taskClassName": "APHWeeklyTaskViewController",
+          "taskCompletionTimeString": "16 Questions"
+        }
+      ]
+    },
+    {
+      "scheduleType": "once",
       "delay": "P4D",
       "scheduleString": "",
       "tasks": [
