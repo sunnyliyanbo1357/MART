@@ -23,7 +23,8 @@
 <div class='container'>
     <div class='row'>
         <h2>Mobile App Researcher Toolkit</h2>
-        <p>Below is the editor generated from the JSON Schema. After finish editing, you can switch between the Editor and JSON by clicking <button class='btn btn-primary' id='showjson'>Editor/JSON</button></p>
+        <p> <button class='btn btn-primary' id='uploadjson'>Upload JSON</button> If you have the online JSON file <b>Access Token</b>, put it here <input type="text" pattern=".{4,}" name="accessToken" id='accessToken' style="width: 28%"> and then click  Upload JSON </p>
+        <p>Below is the editor generated from the JSON Schema. After finish editing, you can switch between the Editor and JSON by clicking <button class='btn btn-primary' id='showjson'>Edit / Preview</button></p>
         <div class='span8 col-md-8 columns eight large-8'>
 <!--             <h2>Mobile App Researcher Toolkit</h2>
             <p>Below is the editor generated from the JSON Schema. After finish editing, you can generate and copy JSON files by clicking <button class='btn btn-primary' id='showjson'>Generate JSON</button></p>
@@ -466,12 +467,61 @@
         reload();
     });
 
+    // Click to change between Editing view and Preview view
     $show_JSON_button.addEventListener('click',function(){
       if($outputdiv.style.display == 'none') $outputdiv.style.display = 'block';
       else $outputdiv.style.display = 'none';
 
       if($editor.style.display == 'none') $editor.style.display = 'block';
       else $editor.style.display = 'none';
+    })
+
+    // Upload the JSON file in uploadURL
+    $upload_JSON_button.addEventListener('click',function(){
+
+      var uploadURL ="https://api.github.com/repos/sunnyliyanbo1357/MART/contents/JSON/asthma_daily_prompt_test.json";
+      var content = btoa($output.value);
+      console.log(atob(content));
+
+
+      //Get original Sha
+      $.ajax({
+        url: uploadURL,
+        beforeSend: function(xhr) {
+          xhr.setRequestHeader('Authorization', "token " + $accessToken.value);
+        },
+        success: function(response) {
+          console.log( response );
+          //PUT new content 
+          $.ajax({
+            type: "PUT",
+            url: uploadURL,
+            beforeSend: function(xhr) {
+              xhr.setRequestHeader('Authorization', "token " + $accessToken.value);
+            },
+            contentType: "application/json",
+            dataType: "json",
+            data: JSON.stringify({
+              "message": "my commit message",
+              "committer": {"name": "Yanbo Li","email": "sunnyliyanbo@gmail.com"},
+              "content" : content,
+              "sha": response.sha}),
+            
+            success: function(response) {
+              alert('Upload Success. Now you can check the RSuite app for new survey.');
+              console.log( response );
+            },
+            error: function(response) {
+              alert('Invalid Token');
+              console.log( response );
+            }
+          })
+        },
+        error: function(response) {
+          alert('Invalid Token');
+          console.log( response );
+        }
+      })
     })
 
     // Set the theme by loading the right stylesheets
