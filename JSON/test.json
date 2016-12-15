@@ -1,20 +1,6 @@
 {
   "schedules": [
     {
-      "scheduleType": "once",
-      "delay": "P3D",
-      "scheduleString": "",
-      "tasks": [
-        {
-          "taskTitle": "About You",
-          "taskID": "AboutYou-27829fa5-d731-4372-ba30-a5859f688297",
-          "taskFileName": "about_you",
-          "taskClassName": "APHDailyTaskViewController",
-          "taskCompletionTimeString": "8 Questions"
-        }
-      ]
-    },
-    {
       "scheduleType": "recurring",
       "delay": "",
       "scheduleString": "* * * * *",
@@ -31,20 +17,6 @@
     {
       "scheduleType": "recurring",
       "delay": "",
-      "scheduleString": "0 5 * * *",
-      "tasks": [
-        {
-          "taskTitle": "Daily Survey",
-          "taskID": "DailyPrompt-27829fa5-d731-4372-ba30-a5859f655297",
-          "taskFileName": "asthma_daily_prompt",
-          "taskClassName": "APHDailyTaskViewController",
-          "taskCompletionTimeString": "8 Questions"
-        }
-      ]
-    },
-    {
-      "scheduleType": "recurring",
-      "delay": "",
       "scheduleString": "0 5 * * 6",
       "tasks": [
         {
@@ -53,6 +25,20 @@
           "taskFileName": "asthma_weekly",
           "taskClassName": "APHWeeklyTaskViewController",
           "taskCompletionTimeString": "16 Questions"
+        }
+      ]
+    },
+    {
+      "scheduleType": "recurring",
+      "delay": "",
+      "scheduleString": "0 5 * * *",
+      "tasks": [
+        {
+          "taskTitle": "Daily Survey",
+          "taskID": "DailyPrompt-27829fa5-d731-4372-ba30-a5859f655297",
+          "taskFileName": "asthma_daily_prompt",
+          "taskClassName": "APHDailyTaskViewController",
+          "taskCompletionTimeString": "8 Questions"
         }
       ]
     },
