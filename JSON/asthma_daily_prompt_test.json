@@ -1,0 +1,198 @@
+{
+  "identifier": "AsthmaDailyPrompt",
+  "type": "Survey",
+  "name": "AsthmaDailyPrompt",
+  "elements": [
+    {
+      "identifier": "day_symptoms",
+      "prompt": "In the last 24 hours, did you have any daytime asthma symptoms (cough, wheeze, shortness of breath or chest tightness)?",
+      "uiHint": "checkbox",
+      "type": "SurveyQuestion",
+      "guid": "e872f8fa-c157-457b-890f-9e28eeed6efa",
+      "constraints": {
+        "dataType": "boolean",
+        "type": "BooleanConstraints",
+        "allowMultiple": false,
+        "rules": [],
+        "enumeration": []
+      }
+    },
+    {
+      "identifier": "night_symptoms",
+      "prompt": "In the last 24 hours, did you have any nighttime waking from asthma symptoms (cough, wheeze, shortness of breath or chest tightness)?",
+      "uiHint": "checkbox",
+      "type": "SurveyQuestion",
+      "guid": "e872f8fa-c157-457b-890f-9e28eeed6efa",
+      "constraints": {
+        "dataType": "boolean",
+        "type": "BooleanConstraints",
+        "allowMultiple": false,
+        "rules": [],
+        "enumeration": []
+      }
+    },
+    {
+      "identifier": "use_qr",
+      "prompt": "Did you use your quick relief inhaler in the last 24 hours, except before exercise?",
+      "uiHint": "checkbox",
+      "type": "SurveyQuestion",
+      "guid": "e872f8fa-c157-457b-890f-9e28eeed6efa",
+      "constraints": {
+        "dataType": "boolean",
+        "type": "BooleanConstraints",
+        "allowMultiple": false,
+        "rules": [
+          {
+            "operator": "eq",
+            "skipTo": "get_worse",
+            "type": "SurveyRule",
+            "value": 0
+          }
+        ],
+        "enumeration": []
+      }
+    },
+    {
+      "identifier": "quick_relief_puffs",
+      "prompt": "Except for use before exercise, how many total puffs of your quick relief medicine did you take over the past 24 hours ?",
+      "uiHint": "numberfield",
+      "type": "SurveyQuestion",
+      "guid": "e27b4728-32e7-4066-985a-bee71e2580c3",
+      "constraints": {
+        "dataType": "integer",
+        "type": "IntegerConstraints",
+        "allowMultiple": false,
+        "rules": [],
+        "enumeration": [],
+        "step": null,
+        "maxValue": 20,
+        "minValue": 0
+      }
+    },
+    {
+      "identifier": "get_worse",
+      "prompt": "Did any of the following cause your asthma to get worse today? (check all that apply):",
+      "uiHint": "MultiValueConstraints",
+      "type": "SurveyQuestion",
+      "guid": "c374b293-f060-4ec9-fd99-2738837967e8",
+      "constraints": {
+        "dataType": "integer",
+        "type": "MultiValueConstraints",
+        "allowMultiple": true,
+        "rules": [],
+        "enumeration": [
+          {
+            "type": "SurveyQuestionOption",
+            "value": 1,
+            "label": "A cold"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 2,
+            "label": "Exercise"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 3,
+            "label": "Being more active than usual (walking, running, climbing stairs)"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 4,
+            "label": "Strong smells (perfume, chemicals, sprays, paint)"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 5,
+            "label": "Exhaust fumes"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 6,
+            "label": "House dust"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 7,
+            "label": "Dogs"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 8,
+            "label": "Cats"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 9,
+            "label": "Other furry/feathered animals"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 10,
+            "label": "Mold"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 11,
+            "label": "Pollen from trees, grass or weeds"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 12,
+            "label": "Extreme heat"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 13,
+            "label": "Extreme cold"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 14,
+            "label": "Changes in weather"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 15,
+            "label": "Around the time of my period"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 16,
+            "label": "Poor air quality"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 17,
+            "label": "Someone smoking near me"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 18,
+            "label": "Stress"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 19,
+            "label": "Feeling sad, angry, excited, tense"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 20,
+            "label": "Laughter"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 21,
+            "label": "I don't know what triggers my asthma"
+          },
+          {
+            "type": "SurveyQuestionOption",
+            "value": 22,
+            "label": "None of these things trigger my asthma"
+          }
+        ]
+      }
+    }
+  ]
+}
