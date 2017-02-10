@@ -11,14 +11,14 @@ Last semester, I developed an iOS app for migraine research. By building an pati
 Reference: [JSON-editor](https://github.com/jdorn/json-editor.git)
 
 ### User Guide
-Please read the User Guide Document in the file list for user guide and developement documents. 
+Please read the [User Guide Document] (https://github.com/sunnyliyanbo1357/MART/blob/master/User:Developer_Documentationpdf.pdf) in the file list for user guide and developement documents. 
 - Go to the MART web page by clicking Demo
 - Put the context of your mobile app or questionnaire into the textboxes accordingly
 - click preview to check JSON file format, copy and paste it to your local JSON files
 - If you have access token, put it in the box and click update
 - Rerun your ResearchSuite mobile app in Xcode/AndriodStudio. If the app content doesn't update, wait for a few minutes and rerun the app.
 
-** If you would like to test or request for Access Token, please contact at yl2556@cornell.edu_**
+** If you would like to test or request for Access Token, please contact at yl2556@cornell.edu **
 
 
 
